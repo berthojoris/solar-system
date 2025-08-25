@@ -189,7 +189,7 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
                 }
               </motion.div>
 
-              {/* Planet image placeholder */}
+              {/* Planet image with specific SVG texture */}
               <motion.div
                 className="w-full h-32 sm:h-48 lg:h-56 mb-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20
                            rounded-xl border border-purple-300/20 flex items-center justify-center overflow-hidden"
@@ -197,15 +197,41 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.4 }}
               >
-                {/* Planet visual representation */}
-                <div
-                  className="w-20 h-20 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full shadow-2xl flex items-center justify-center text-3xl sm:text-5xl lg:text-6xl"
-                  style={{
-                    background: `radial-gradient(circle at 30% 30%, ${planet.color || '#ffffff'}aa, ${planet.color || '#ffffff'}22)`,
-                    boxShadow: `0 0 40px ${planet.color || '#ffffff'}44`
-                  }}
-                >
-                  {planet.type === 'sun' ? '☀️' : '🌍'}
+                {/* Planet-specific SVG texture */}
+                <div className="relative w-20 h-20 sm:w-32 sm:h-32 lg:w-40 lg:h-40">
+                  <div
+                    className="w-full h-full rounded-full overflow-hidden shadow-2xl"
+                    style={{
+                      boxShadow: `0 0 40px ${planet.color || '#ffffff'}66`
+                    }}
+                  >
+                    <img
+                      src={planet.textureUrl}
+                      alt={`${useIndonesian ? planet.nameId : planet.name} texture`}
+                      className="w-full h-full object-cover"
+                      style={{
+                        filter: `drop-shadow(0 0 20px ${planet.color || '#ffffff'}44)`,
+                      }}
+                      onError={(e) => {
+                        // Fallback to emoji if SVG fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.closest('.rounded-full')?.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                  </div>
+                  {/* Fallback emoji display */}
+                  <div
+                    className="absolute inset-0 rounded-full shadow-2xl items-center justify-center text-3xl sm:text-5xl lg:text-6xl"
+                    style={{
+                      display: 'none',
+                      background: `radial-gradient(circle at 30% 30%, ${planet.color || '#ffffff'}aa, ${planet.color || '#ffffff'}22)`,
+                      boxShadow: `0 0 40px ${planet.color || '#ffffff'}44`
+                    }}
+                  >
+                    {planet.type === 'sun' ? '☀️' : '🌍'}
+                  </div>
                 </div>
               </motion.div>
 
