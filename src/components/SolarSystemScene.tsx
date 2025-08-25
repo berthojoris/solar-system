@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import CelestialBody from './CelestialBody';
 import PlanetTooltip from './RoboticTooltip';
 import OrbitSpeedSettings from './OrbitSpeedSettings';
+import MeteorRain from './MeteorRain';
 import { PLANET_DATA, PlanetData } from '@/data/planetData';
 
 interface PlanetPosition {
@@ -72,10 +73,14 @@ const SceneContent = ({
   selectedPlanet,
   language = 'id',
   onPlanetPositionUpdate,
-  orbitSpeedMultiplier = 1
+  orbitSpeedMultiplier = 1,
+  meteorRainEnabled = false,
+  meteorRainIntensity = 1
 }: SolarSystemSceneProps & {
   onPlanetPositionUpdate: (planetData: PlanetData, position: { x: number; y: number }) => void;
   orbitSpeedMultiplier?: number;
+  meteorRainEnabled?: boolean;
+  meteorRainIntensity?: number;
 }) => {
   const handlePlanetClick = useCallback((planet: PlanetData) => {
     if (onPlanetSelect) {
@@ -135,6 +140,14 @@ const SceneContent = ({
         // Start with a good overview position
         target={[0, 0, 0]}
       />
+
+      {/* Meteor Rain Effect */}
+      <MeteorRain
+        enabled={meteorRainEnabled}
+        count={Math.floor(8 * meteorRainIntensity)}
+        speed={0.8 + (meteorRainIntensity * 0.4)}
+        intensity={meteorRainIntensity}
+      />
     </>
   );
 };
@@ -148,6 +161,10 @@ const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
 
   // State for orbit speed control
   const [orbitSpeedMultiplier, setOrbitSpeedMultiplier] = useState<number>(1);
+
+  // State for meteor rain effect
+  const [meteorRainEnabled, setMeteorRainEnabled] = useState<boolean>(false);
+  const [meteorRainIntensity, setMeteorRainIntensity] = useState<number>(1);
 
   const handlePlanetPositionUpdate = useCallback((planetData: PlanetData, position: { x: number; y: number }) => {
     setPlanetPositions(prev => {
@@ -167,6 +184,16 @@ const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
   // Handle orbit speed change
   const handleOrbitSpeedChange = useCallback((multiplier: number) => {
     setOrbitSpeedMultiplier(multiplier);
+  }, []);
+
+  // Handle meteor rain toggle
+  const handleMeteorRainToggle = useCallback((enabled: boolean) => {
+    setMeteorRainEnabled(enabled);
+  }, []);
+
+  // Handle meteor rain intensity change
+  const handleMeteorRainIntensityChange = useCallback((intensity: number) => {
+    setMeteorRainIntensity(intensity);
   }, []);
 
   return (
@@ -201,6 +228,8 @@ const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
           language={language}
           onPlanetPositionUpdate={handlePlanetPositionUpdate}
           orbitSpeedMultiplier={orbitSpeedMultiplier}
+          meteorRainEnabled={meteorRainEnabled}
+          meteorRainIntensity={meteorRainIntensity}
         />
       </Canvas>
 
@@ -219,6 +248,10 @@ const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
       <OrbitSpeedSettings
         orbitSpeedMultiplier={orbitSpeedMultiplier}
         onSpeedChange={handleOrbitSpeedChange}
+        meteorRainEnabled={meteorRainEnabled}
+        onMeteorRainToggle={handleMeteorRainToggle}
+        meteorRainIntensity={meteorRainIntensity}
+        onMeteorRainIntensityChange={handleMeteorRainIntensityChange}
         language={language}
       />
     </div>

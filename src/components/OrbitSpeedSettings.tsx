@@ -6,12 +6,20 @@ import { Settings, ChevronRight, ChevronDown } from 'lucide-react';
 interface OrbitSpeedSettingsProps {
   orbitSpeedMultiplier: number;
   onSpeedChange: (multiplier: number) => void;
+  meteorRainEnabled?: boolean;
+  onMeteorRainToggle?: (enabled: boolean) => void;
+  meteorRainIntensity?: number;
+  onMeteorRainIntensityChange?: (intensity: number) => void;
   language?: 'id' | 'en';
 }
 
 const OrbitSpeedSettings = ({
   orbitSpeedMultiplier,
   onSpeedChange,
+  meteorRainEnabled = false,
+  onMeteorRainToggle,
+  meteorRainIntensity = 1,
+  onMeteorRainIntensityChange,
   language = 'en'
 }: OrbitSpeedSettingsProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +44,7 @@ const OrbitSpeedSettings = ({
     <div className="fixed top-20 right-4 z-50">
       <div
         className={`bg-black/80 backdrop-blur-sm border border-blue-500/30 rounded-lg transition-all duration-300 ${
-          isOpen ? 'w-72' : 'w-12'
+          isOpen ? 'w-80' : 'w-12'
         }`}
       >
         {/* Toggle Button */}
@@ -119,11 +127,63 @@ const OrbitSpeedSettings = ({
               </div>
             </div>
 
+            {/* Meteor Rain Settings */}
+            <div className="mt-6 pt-4 border-t border-gray-700">
+              <div className="text-xs text-blue-300 mb-3">
+                {language === 'id' ? 'Efek Visual:' : 'Visual Effects:'}
+              </div>
+
+              {/* Meteor Rain Toggle */}
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-white text-sm">
+                  {language === 'id' ? 'Hujan Meteor' : 'Meteor Rain'}
+                </span>
+                <button
+                  onClick={() => onMeteorRainToggle?.(!meteorRainEnabled)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                    meteorRainEnabled ? 'bg-blue-600' : 'bg-gray-600'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      meteorRainEnabled ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+              </div>
+
+              {/* Meteor Rain Intensity */}
+              {meteorRainEnabled && (
+                <div className="mb-3">
+                  <label className="block text-xs text-blue-300 mb-2">
+                    {language === 'id' ? 'Intensitas:' : 'Intensity:'}
+                  </label>
+                  <input
+                    type="range"
+                    min="0.5"
+                    max="3"
+                    step="0.1"
+                    value={meteorRainIntensity}
+                    onChange={(e) => onMeteorRainIntensityChange?.(parseFloat(e.target.value))}
+                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+                    style={{
+                      background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((meteorRainIntensity - 0.5) / 2.5) * 100}%, #374151 ${((meteorRainIntensity - 0.5) / 2.5) * 100}%, #374151 100%)`
+                    }}
+                  />
+                  <div className="flex justify-between text-xs text-gray-400 mt-1">
+                    <span>{language === 'id' ? 'Ringan' : 'Light'}</span>
+                    <span>{language === 'id' ? 'Sedang' : 'Medium'}</span>
+                    <span>{language === 'id' ? 'Intensif' : 'Intense'}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Info Text */}
             <div className="mt-4 text-xs text-gray-400 leading-relaxed">
               {language === 'id'
-                ? 'Mengatur kecepatan orbit planet mengelilingi matahari. Gunakan 0x untuk menghentikan gerakan.'
-                : 'Control how fast planets orbit around the sun. Use 0x to pause orbital motion.'
+                ? 'Mengatur kecepatan orbit planet dan efek visual. Hujan meteor memberikan atmosfer luar angkasa yang realistis.'
+                : 'Control orbital speed and visual effects. Meteor rain adds realistic space atmosphere.'
               }
             </div>
           </div>

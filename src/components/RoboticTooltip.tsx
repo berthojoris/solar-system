@@ -20,9 +20,9 @@ const PlanetTooltip: React.FC<PlanetTooltipProps> = ({
 
   // Calculate tooltip position above the planet
   const tooltipX = position.x;
-  const tooltipY = position.y - 120; // Position above the planet
-  const lineStartY = position.y - 20; // Start line close to planet
-  const lineEndY = tooltipY + 60; // End line at tooltip bottom
+  const tooltipY = position.y - 60; // Position closer above the planet
+  const lineStartY = position.y - 10; // Start line closer to planet
+  const lineEndY = tooltipY + 40; // End line at tooltip bottom
   const lineHeight = lineStartY - lineEndY;
 
   return (
@@ -78,7 +78,7 @@ const PlanetTooltip: React.FC<PlanetTooltipProps> = ({
         />
 
         {/* Content */}
-        <div className="relative bg-slate-900/90 backdrop-blur-sm rounded-lg px-3 py-2
+        <div className="relative bg-slate-900/90 backdrop-blur-sm rounded-lg px-2 py-1
                       border border-cyan-400/25 shadow-lg shadow-cyan-400/10">
           {/* Corner decorations */}
           <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-cyan-400"></div>
