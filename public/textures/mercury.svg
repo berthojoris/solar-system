@@ -1,0 +1,21 @@
+<svg width="1024" height="512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="mercuryGradient" cx="0.3" cy="0.3" r="0.8">
+      <stop offset="0%" style="stop-color:#B8860B;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#8C7853;stop-opacity:1" />
+      <stop offset="80%" style="stop-color:#696969;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2F2F2F;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#mercuryGradient)"/>
+  <!-- Craters -->
+  <circle cx="200" cy="150" r="25" fill="#696969" opacity="0.7"/>
+  <circle cx="700" cy="250" r="35" fill="#2F2F2F" opacity="0.6"/>
+  <circle cx="450" cy="300" r="20" fill="#5D4E37" opacity="0.5"/>
+  <circle cx="800" cy="120" r="30" fill="#8B7355" opacity="0.6"/>
+  <circle cx="100" cy="400" r="40" fill="#654321" opacity="0.7"/>
+  <circle cx="600" cy="80" r="15" fill="#708090" opacity="0.5"/>
+  <!-- Surface features -->
+  <path d="M0,180 Q200,160 400,180 Q600,200 800,180 Q900,170 1024,180" stroke="#A0522D" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M0,350 Q300,330 600,350 Q800,370 1024,350" stroke="#8B7355" stroke-width="2" fill="none" opacity="0.3"/>
+</svg>

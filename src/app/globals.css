@@ -8,8 +8,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-nunito);
+  --font-comic: var(--font-comic-neue);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +22,55 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-nunito), Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent scrollbars on the 3D canvas */
+}
+
+/* Ensure 3D canvas takes full viewport */
+html,
+body,
+#__next {
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom scrollbar for modal content */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.5);
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.7);
+}
+
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+/* Smooth transitions for interactive elements */
+button,
+a {
+  transition: all 0.2s ease;
+}
+
+/* Ensure fonts are loaded with fallbacks */
+.font-comic {
+  font-family: var(--font-comic-neue), "Comic Sans MS", cursive;
+}
+
+.font-nunito {
+  font-family: var(--font-nunito), "Arial", sans-serif;
 }
