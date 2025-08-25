@@ -212,15 +212,28 @@ const MeteorRain: React.FC<MeteorRainProps> = ({
 }) => {
   const groupRef = useRef<THREE.Group>(null);
 
-  // Generate meteor configurations
+  // Generate meteor configurations with mobile optimization
   const meteors = useMemo(() => {
     const meteorArray: MeteorProps[] = [];
 
-    for (let i = 0; i < count; i++) {
-      // Random starting position above and around the scene
+    // Detect mobile/small screens
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 1024;
+
+    // Adjust spawn parameters based on screen size
+    const baseRadius = isMobile ? 80 : isSmallScreen ? 120 : 200;
+    const radiusRange = isMobile ? 100 : isSmallScreen ? 150 : 200;
+    const baseHeight = isMobile ? 60 : isSmallScreen ? 80 : 100;
+    const heightRange = isMobile ? 100 : isSmallScreen ? 120 : 150;
+
+    // Increase meteor count for mobile to ensure visibility
+    const effectiveCount = isMobile ? Math.ceil(count * 1.5) : count;
+
+    for (let i = 0; i < effectiveCount; i++) {
+      // Random starting position optimized for screen size
       const angle = Math.random() * Math.PI * 2;
-      const radius = 200 + Math.random() * 200;
-      const height = 100 + Math.random() * 150;
+      const radius = baseRadius + Math.random() * radiusRange;
+      const height = baseHeight + Math.random() * heightRange;
 
       const startPos: [number, number, number] = [
         Math.cos(angle) * radius,
@@ -228,18 +241,27 @@ const MeteorRain: React.FC<MeteorRainProps> = ({
         Math.sin(angle) * radius
       ];
 
-      // Velocity creating diagonal streaking motion like real falling stars
+      // Adjust velocity for screen size - smaller screens need more contained movement
+      const horizontalSpeed = isMobile ? 25 : isSmallScreen ? 30 : 40;
+      const verticalSpeed = isMobile ? 35 : isSmallScreen ? 40 : 50;
+      const verticalRange = isMobile ? 25 : isSmallScreen ? 30 : 40;
+
       const vel: [number, number, number] = [
-        (Math.random() - 0.5) * 40 * speed - startPos[0] * 0.05, // More horizontal movement
-        (-50 - Math.random() * 40) * speed, // Fast downward movement
-        (Math.random() - 0.5) * 40 * speed - startPos[2] * 0.05 // More horizontal movement
+        (Math.random() - 0.5) * horizontalSpeed * speed - startPos[0] * 0.05,
+        (-verticalSpeed - Math.random() * verticalRange) * speed,
+        (Math.random() - 0.5) * horizontalSpeed * speed - startPos[2] * 0.05
       ];
 
-      // Meteor properties
-      const size = 0.4 + Math.random() * 0.6;
+      // Adjust meteor size for mobile visibility
+      const baseSize = isMobile ? 0.3 : 0.4;
+      const sizeRange = isMobile ? 0.5 : 0.6;
+      const size = baseSize + Math.random() * sizeRange;
+
       const colors = ['#ffffff', '#f0f0f0', '#e8e8e8', '#f8f8f8', '#eeeeee'];
       const color = colors[Math.floor(Math.random() * colors.length)];
-      const trailLength = 25; // Fixed length for consistent streaks
+
+      // Adjust trail length for mobile performance and visibility
+      const trailLength = isMobile ? 20 : 25;
 
       meteorArray.push({
         position: startPos,

@@ -144,7 +144,7 @@ const SceneContent = ({
       {/* Meteor Rain Effect */}
       <MeteorRain
         enabled={meteorRainEnabled}
-        count={Math.floor(8 * meteorRainIntensity)}
+        count={Math.floor(12 * meteorRainIntensity)} // Increased base count for better mobile visibility
         speed={0.8 + (meteorRainIntensity * 0.4)}
         intensity={meteorRainIntensity}
       />
