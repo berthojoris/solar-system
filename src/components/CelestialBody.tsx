@@ -1,20 +1,36 @@
 'use client';
 
-import React, { useRef, useMemo, useCallback } from 'react';
-import { useFrame, useLoader } from '@react-three/fiber';
+import React, { useRef, useMemo, useCallback, useState } from 'react';
+import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { TextureLoader } from 'three';
 import * as THREE from 'three';
 import { PlanetData } from '@/data/planetData';
+import { useRoboticAudio } from '@/hooks/useRoboticAudio';
 
 interface CelestialBodyProps {
   planetData: PlanetData;
   onClick?: (planetData: PlanetData) => void;
   isSelected?: boolean;
+  onPositionUpdate?: (planetData: PlanetData, position: { x: number; y: number }) => void;
+  language?: 'id' | 'en';
 }
 
-const CelestialBody = React.memo(({ planetData, onClick, isSelected }: CelestialBodyProps) => {
+const CelestialBody = React.memo(({
+  planetData,
+  onClick,
+  isSelected,
+  onPositionUpdate,
+  language = 'id'
+}: CelestialBodyProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Three.js hooks
+  const { camera, gl } = useThree();
+
+  // Audio hook
+  const { playHoverSound, playPlanetSound } = useRoboticAudio({ volume: 0.2 });
 
   // Load texture - useLoader will handle errors internally and return null on failure
   const texture = useLoader(TextureLoader, planetData.textureUrl);
@@ -59,25 +75,67 @@ const CelestialBody = React.memo(({ planetData, onClick, isSelected }: Celestial
       groupRef.current.position.x = Math.sin(angle) * planetData.distance;
       groupRef.current.position.z = Math.cos(angle) * planetData.distance;
     }
+
+    // Update position for tooltip every frame
+    if (meshRef.current && onPositionUpdate) {
+      const screenPos = getScreenPosition();
+      onPositionUpdate(planetData, screenPos);
+    }
   });
+
+  // Get planet name based on language
+  const getPlanetName = useCallback((data: PlanetData, lang: 'id' | 'en') => {
+    if (lang === 'id') {
+      return data.nameId;
+    }
+    return data.name;
+  }, []);
+
+  // Convert 3D position to screen coordinates
+  const getScreenPosition = useCallback(() => {
+    if (!meshRef.current) return { x: 0, y: 0 };
+
+    const vector = new THREE.Vector3();
+    meshRef.current.getWorldPosition(vector);
+    vector.project(camera);
+
+    const widthHalf = gl.domElement.clientWidth / 2;
+    const heightHalf = gl.domElement.clientHeight / 2;
+
+    return {
+      x: (vector.x * widthHalf) + widthHalf,
+      y: -(vector.y * heightHalf) + heightHalf
+    };
+  }, [camera, gl]);
 
   // Handle click events
   const handleClick = useCallback(
     (event: MouseEvent) => {
       event.stopPropagation();
+
+      // Play robotic sound specific to this planet
+      const planetName = getPlanetName(planetData, language);
+      playPlanetSound(planetName);
+
       if (onClick) {
         onClick(planetData);
       }
     },
-    [onClick, planetData]
+    [onClick, planetData, playPlanetSound, getPlanetName, language]
   );
 
   // Handle hover effects
-  const handlePointerOver = useCallback(() => {
+  const handlePointerOver = useCallback((event: MouseEvent) => {
+    event.stopPropagation();
+    setIsHovered(true);
     document.body.style.cursor = 'pointer';
-  }, []);
+
+    // Play hover sound
+    playHoverSound();
+  }, [playHoverSound]);
 
   const handlePointerOut = useCallback(() => {
+    setIsHovered(false);
     document.body.style.cursor = 'default';
   }, []);
 
@@ -85,7 +143,7 @@ const CelestialBody = React.memo(({ planetData, onClick, isSelected }: Celestial
     <group ref={groupRef} position={[0, 0, 0]}>
       <mesh
         ref={meshRef}
-        scale={[planetData.scale, planetData.scale, planetData.scale]}
+        scale={isHovered ? [planetData.scale * 1.05, planetData.scale * 1.05, planetData.scale * 1.05] : [planetData.scale, planetData.scale, planetData.scale]}
         onClick={handleClick}
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}
@@ -101,6 +159,19 @@ const CelestialBody = React.memo(({ planetData, onClick, isSelected }: Celestial
               color={planetData.color || '#ffffff'}
               transparent
               opacity={0.2}
+              side={THREE.BackSide}
+            />
+          </mesh>
+        )}
+
+        {/* Add hover glow effect */}
+        {isHovered && (
+          <mesh scale={[1.08, 1.08, 1.08]}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshBasicMaterial
+              color="#00ffff"
+              transparent
+              opacity={0.15}
               side={THREE.BackSide}
             />
           </mesh>

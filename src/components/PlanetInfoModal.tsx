@@ -2,9 +2,8 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Play, Pause, Square, Volume2, Languages, Loader2, AlertCircle } from 'lucide-react';
+import { X, Languages } from 'lucide-react';
 import { PlanetData } from '@/data/planetData';
-import { useHybridTTS } from '@/hooks/useHybridTTS';
 
 interface PlanetInfoModalProps {
   planet: PlanetData | null;
@@ -13,28 +12,7 @@ interface PlanetInfoModalProps {
 
 const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) => {
   const [useIndonesian, setUseIndonesian] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const {
-    isSupported,
-    isLoading,
-    isPlaying,
-    isPaused,
-    error,
-    ttsMode,
-    generateSpeech,
-    play,
-    pause,
-    stop,
-    toggle,
-    cancelGeneration
-  } = useHybridTTS({
-    lang: useIndonesian ? 'id-ID' : 'en-US',
-    onError: (error) => setErrorMessage(error),
-    onLoadingChange: (loading) => {
-      if (loading) setErrorMessage(null);
-    }
-  });
   // Handle escape key press
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -169,60 +147,6 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
                 </span>
               </button>
 
-              {/* Voice controls */}
-              {isSupported && (
-                <>
-                  <button
-                    onClick={() => {
-                      if (planet) {
-                        if (isLoading) {
-                          cancelGeneration();
-                        } else {
-                          generateSpeech(planet, useIndonesian);
-                        }
-                      }
-                    }}
-                    disabled={!isSupported}
-                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50
-                               transition-colors duration-200 group relative"
-                    aria-label={isLoading ? "Cancel generation" : "Generate AI narration"}
-                    title={isLoading ? "Cancel generation" : "Generate AI narration"}
-                  >
-                    {isLoading ? (
-                      <Loader2 className="w-5 h-5 text-white animate-spin" />
-                    ) : (
-                      <Play className="w-5 h-5 text-white group-hover:text-green-300 transition-colors duration-200" />
-                    )}
-                  </button>
-
-                  <button
-                    onClick={toggle}
-                    disabled={!isPlaying && !isPaused || isLoading}
-                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50
-                               transition-colors duration-200 group"
-                    aria-label={isPaused ? "Resume narration" : "Pause narration"}
-                    title={isPaused ? "Resume narration" : "Pause narration"}
-                  >
-                    {isPaused ? (
-                      <Play className="w-5 h-5 text-white group-hover:text-green-300 transition-colors duration-200" />
-                    ) : (
-                      <Pause className="w-5 h-5 text-white group-hover:text-yellow-300 transition-colors duration-200" />
-                    )}
-                  </button>
-
-                  <button
-                    onClick={stop}
-                    disabled={!isPlaying && !isPaused || isLoading}
-                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50
-                               transition-colors duration-200 group"
-                    aria-label="Stop narration"
-                    title="Stop narration"
-                  >
-                    <Square className="w-5 h-5 text-white group-hover:text-red-300 transition-colors duration-200" />
-                  </button>
-                </>
-              )}
-
               {/* Close button */}
               <button
                 onClick={onClose}
@@ -243,7 +167,7 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
               <div className="p-4 sm:p-6 lg:p-8 max-h-[calc(85vh-2rem)] overflow-y-auto modern-scroll">
               {/* Planet name */}
               <motion.h1
-                className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 font-['Comic_Neue',_cursive] pr-20"
+                className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 font-['Comic_Neue',_cursive] pr-16"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2, duration: 0.4 }}
@@ -330,74 +254,23 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
                 transition={{ delay: 1, duration: 0.4 }}
               >
                 <div className="text-center">
-                  {isSupported ? (
-                    <div className="flex flex-col items-center justify-center space-y-2 mb-3">
-                      <div className="flex items-center space-x-2">
-                        <Volume2 className="w-4 h-4 text-purple-300" />
-                        <p className="text-xs text-purple-300 font-['Nunito',_sans-serif]">
-                          {useIndonesian
-                            ? 'Klik tombol putar untuk mendengarkan narasi AI berkualitas tinggi!'
-                            : 'Click play button to listen to high-quality AI narration!'
-                          }
-                        </p>
-                        {isLoading && (
-                          <div className="flex items-center space-x-1">
-                            <Loader2 className="w-3 h-3 text-blue-400 animate-spin" />
-                            <span className="text-xs text-blue-400 font-['Nunito',_sans-serif]">
-                              {useIndonesian ? 'Membuat narasi AI...' : 'Generating AI narration...'}
-                            </span>
-                          </div>
-                        )}
-                        {isPlaying && !isLoading && (
-                          <div className="flex items-center space-x-1">
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                            <span className="text-xs text-green-400 font-['Nunito',_sans-serif]">
-                              {useIndonesian ? 'Memutar AI' : 'AI Playing'}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* AI TTS Quality indicator */}
-                      <div className="text-xs text-purple-200/70 font-['Nunito',_sans-serif]">
-                        <span>
-                          {useIndonesian
-                            ? '🤖 Didukung oleh AI TTS dengan DeepSeek & OpenRouter'
-                            : '🤖 Powered by AI TTS with DeepSeek & OpenRouter'
-                          }
-                        </span>
-                      </div>
-
-                      {/* Error display */}
-                      {(error || errorMessage) && (
-                        <div className="flex items-center space-x-2 mt-2 p-2 bg-red-500/20 rounded-lg border border-red-300/30">
-                          <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
-                          <span className="text-xs text-red-300 font-['Nunito',_sans-serif]">
-                            {useIndonesian
-                              ? `Error: ${error || errorMessage}`
-                              : `Error: ${error || errorMessage}`
-                            }
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center space-x-2 mb-3 p-2 bg-yellow-500/20 rounded-lg border border-yellow-300/30">
-                      <AlertCircle className="w-4 h-4 text-yellow-400" />
-                      <p className="text-xs text-yellow-300 font-['Nunito',_sans-serif]">
-                        {useIndonesian
-                          ? 'Audio tidak didukung di browser ini'
-                          : 'Audio not supported in this browser'
-                        }
-                      </p>
-                    </div>
-                  )}
                   <p className="text-xs sm:text-sm text-purple-200 font-['Nunito',_sans-serif]">
                     {useIndonesian
                       ? 'Klik di luar jendela ini atau tekan Escape untuk melanjutkan eksplorasi! 🚀'
                       : 'Click anywhere outside this window or press Escape to continue exploring! 🚀'
                     }
                   </p>
+
+                  {/* Language indicator */}
+                  <div className="flex items-center justify-center space-x-2 mt-3">
+                    <Languages className="w-4 h-4 text-purple-300" />
+                    <span className="text-xs text-purple-300 font-['Nunito',_sans-serif]">
+                      {useIndonesian
+                        ? '🌐 Tersedia dalam Bahasa Indonesia & English'
+                        : '🌐 Available in Indonesian & English'
+                      }
+                    </span>
+                  </div>
                 </div>
               </motion.div>
               </div>

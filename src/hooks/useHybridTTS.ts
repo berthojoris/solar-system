@@ -67,75 +67,6 @@ export const useHybridTTS = (options: UseHybridTTSOptions = {}) => {
     setIsPaused(false);
   }, []);
 
-  // Try AI TTS first
-  const tryAITTS = useCallback(async (planetData: PlanetData, useIndonesian: boolean): Promise<boolean> => {
-    try {
-      setTtsMode('ai');
-      abortControllerRef.current = new AbortController();
-
-      const response = await fetch('/api/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planetData, useIndonesian }),
-        signal: abortControllerRef.current.signal
-      });
-
-      if (response.ok) {
-        const audioBlob = await response.blob();
-        const audioUrl = URL.createObjectURL(audioBlob);
-
-        const audio = new Audio(audioUrl);
-        audioRef.current = audio;
-
-        // Setup audio event handlers
-        audio.addEventListener('play', () => { setIsPlaying(true); setIsPaused(false); });
-        audio.addEventListener('pause', () => { setIsPaused(true); });
-        audio.addEventListener('ended', () => { setIsPlaying(false); setIsPaused(false); });
-        audio.addEventListener('error', () => {
-          setIsPlaying(false);
-          setIsPaused(false);
-          setError('Audio playback failed');
-        });
-
-        await audio.play();
-        return true;
-      }
-    } catch (error) {
-      console.log('AI TTS failed, trying fallback...', error);
-    }
-    return false;
-  }, []);
-
-  // Try enhanced browser TTS with AI text
-  const tryEnhancedBrowserTTS = useCallback(async (planetData: PlanetData, useIndonesian: boolean): Promise<boolean> => {
-    try {
-      setTtsMode('enhanced-browser');
-      abortControllerRef.current = new AbortController();
-
-      const response = await fetch('/api/enhance-text', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planetData, useIndonesian }),
-        signal: abortControllerRef.current.signal
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        return await playWithBrowserTTS(data.enhancedText, useIndonesian);
-      }
-    } catch (error) {
-      console.log('Enhanced text generation failed, trying basic...', error);
-    }
-    return false;
-  }, []);
-
-  // Basic browser TTS fallback
-  const tryBasicBrowserTTS = useCallback((planetData: PlanetData, useIndonesian: boolean): Promise<boolean> => {
-    setTtsMode('basic-browser');
-    const basicText = generateBasicNarration(planetData, useIndonesian);
-    return playWithBrowserTTS(basicText, useIndonesian);
-  }, []);
-
   const playWithBrowserTTS = useCallback((text: string, useIndonesian: boolean): Promise<boolean> => {
     return new Promise((resolve) => {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
@@ -177,6 +108,91 @@ export const useHybridTTS = (options: UseHybridTTSOptions = {}) => {
       window.speechSynthesis.speak(utterance);
     });
   }, []);
+
+  // Try AI TTS first
+  const tryAITTS = useCallback(async (planetData: PlanetData, useIndonesian: boolean): Promise<boolean> => {
+    try {
+      setTtsMode('ai');
+      abortControllerRef.current = new AbortController();
+
+      const response = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planetData, useIndonesian }),
+        signal: abortControllerRef.current.signal
+      });
+
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+
+        // Check if we got audio or fallback JSON response
+        if (contentType?.includes('audio/mpeg')) {
+          // We got actual audio from TTS
+          const audioBlob = await response.blob();
+          const audioUrl = URL.createObjectURL(audioBlob);
+
+          const audio = new Audio(audioUrl);
+          audioRef.current = audio;
+
+          // Setup audio event handlers
+          audio.addEventListener('play', () => { setIsPlaying(true); setIsPaused(false); });
+          audio.addEventListener('pause', () => { setIsPaused(true); });
+          audio.addEventListener('ended', () => { setIsPlaying(false); setIsPaused(false); });
+          audio.addEventListener('error', () => {
+            setIsPlaying(false);
+            setIsPaused(false);
+            setError('Audio playback failed');
+          });
+
+          await audio.play();
+          return true;
+        } else {
+          // We got enhanced text fallback from API
+          const data = await response.json();
+          if (data.enhancedText && data.fallback) {
+            console.log('Got enhanced text fallback from API:', data.message);
+            // Use the enhanced text with browser TTS
+            setTtsMode('enhanced-browser');
+            return await playWithBrowserTTS(data.enhancedText, useIndonesian);
+          }
+        }
+      }
+    } catch (error) {
+      console.log('AI TTS failed, trying fallback...', error);
+    }
+    return false;
+  }, []);
+
+  // Try enhanced browser TTS with AI text
+  const tryEnhancedBrowserTTS = useCallback(async (planetData: PlanetData, useIndonesian: boolean): Promise<boolean> => {
+    try {
+      setTtsMode('enhanced-browser');
+      abortControllerRef.current = new AbortController();
+
+      const response = await fetch('/api/enhance-text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planetData, useIndonesian }),
+        signal: abortControllerRef.current.signal
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return await playWithBrowserTTS(data.enhancedText, useIndonesian);
+      }
+    } catch (error) {
+      console.log('Enhanced text generation failed, trying basic...', error);
+    }
+    return false;
+  }, []);
+
+  // Basic browser TTS fallback
+  const tryBasicBrowserTTS = useCallback((planetData: PlanetData, useIndonesian: boolean): Promise<boolean> => {
+    setTtsMode('basic-browser');
+    const basicText = generateBasicNarration(planetData, useIndonesian);
+    return playWithBrowserTTS(basicText, useIndonesian);
+  }, []);
+
 
   const generateSpeech = useCallback(async (planetData: PlanetData, useIndonesian: boolean = true) => {
     if (!isSupported) {

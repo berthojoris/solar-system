@@ -5,11 +5,18 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import CelestialBody from './CelestialBody';
+import PlanetTooltip from './RoboticTooltip';
 import { PLANET_DATA, PlanetData } from '@/data/planetData';
+
+interface PlanetPosition {
+  planetData: PlanetData;
+  position: { x: number; y: number };
+}
 
 interface SolarSystemSceneProps {
   onPlanetSelect?: (planet: PlanetData | null) => void;
   selectedPlanet?: PlanetData | null;
+  language?: 'id' | 'en';
 }
 
 // Loading fallback component
@@ -59,7 +66,14 @@ const Lighting = () => {
 };
 
 // Main scene content component
-const SceneContent = ({ onPlanetSelect, selectedPlanet }: SolarSystemSceneProps) => {
+const SceneContent = ({
+  onPlanetSelect,
+  selectedPlanet,
+  language = 'id',
+  onPlanetPositionUpdate
+}: SolarSystemSceneProps & {
+  onPlanetPositionUpdate: (planetData: PlanetData, position: { x: number; y: number }) => void
+}) => {
   const handlePlanetClick = useCallback((planet: PlanetData) => {
     if (onPlanetSelect) {
       // Toggle selection - if same planet is clicked, deselect it
@@ -96,6 +110,8 @@ const SceneContent = ({ onPlanetSelect, selectedPlanet }: SolarSystemSceneProps)
             planetData={planetData}
             onClick={handlePlanetClick}
             isSelected={selectedPlanet?.name === planetData.name}
+            onPositionUpdate={onPlanetPositionUpdate}
+            language={language}
           />
         </Suspense>
       ))}
@@ -121,10 +137,28 @@ const SceneContent = ({ onPlanetSelect, selectedPlanet }: SolarSystemSceneProps)
 
 const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
   onPlanetSelect,
-  selectedPlanet
+  selectedPlanet,
+  language = 'id'
 }) => {
+  const [planetPositions, setPlanetPositions] = useState<PlanetPosition[]>([]);
+
+  const handlePlanetPositionUpdate = useCallback((planetData: PlanetData, position: { x: number; y: number }) => {
+    setPlanetPositions(prev => {
+      const existingIndex = prev.findIndex(p => p.planetData.name === planetData.name);
+      const newPosition = { planetData, position };
+
+      if (existingIndex >= 0) {
+        const updated = [...prev];
+        updated[existingIndex] = newPosition;
+        return updated;
+      } else {
+        return [...prev, newPosition];
+      }
+    });
+  }, []);
+
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full relative">
       <Canvas
         camera={{
           position: [0, 20, 40],
@@ -152,8 +186,21 @@ const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
         <SceneContent
           onPlanetSelect={onPlanetSelect}
           selectedPlanet={selectedPlanet}
+          language={language}
+          onPlanetPositionUpdate={handlePlanetPositionUpdate}
         />
       </Canvas>
+
+      {/* Planet Tooltips - Always Visible */}
+      {planetPositions.map(({ planetData, position }) => (
+        <PlanetTooltip
+          key={planetData.name}
+          planetName={planetData.name}
+          planetNameId={planetData.nameId}
+          position={position}
+          useIndonesian={language === 'id'}
+        />
+      ))}
     </div>
   );
 };

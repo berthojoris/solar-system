@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Languages } from 'lucide-react';
 import SolarSystemScene from '@/components/SolarSystemScene';
 import PlanetInfoModal from '@/components/PlanetInfoModal';
 import { PlanetData } from '@/data/planetData';
 
 export default function Home() {
   const [selectedPlanet, setSelectedPlanet] = useState<PlanetData | null>(null);
+  const [language, setLanguage] = useState<'id' | 'en'>('id');
 
   const handlePlanetSelect = (planet: PlanetData | null) => {
     setSelectedPlanet(planet);
@@ -17,8 +19,38 @@ export default function Home() {
     setSelectedPlanet(null);
   };
 
+  const toggleLanguage = () => {
+    setLanguage(prev => prev === 'id' ? 'en' : 'id');
+  };
+
   return (
     <div className="w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 to-purple-900 relative">
+      {/* Language Toggle Button */}
+      <motion.button
+        className="absolute top-6 right-6 z-20 bg-black/30 backdrop-blur-sm rounded-full p-3
+                   border border-purple-300/20 hover:border-cyan-400/50 transition-all duration-300
+                   group hover:bg-black/50"
+        onClick={toggleLanguage}
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1, duration: 0.8 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <div className="flex items-center space-x-2">
+          <Languages className="w-5 h-5 text-purple-200 group-hover:text-cyan-400 transition-colors" />
+          <span className="text-purple-200 group-hover:text-cyan-400 transition-colors font-mono text-sm">
+            {language.toUpperCase()}
+          </span>
+        </div>
+
+        {/* Robotic border animation */}
+        <div className="absolute inset-0 rounded-full border border-cyan-400/0 group-hover:border-cyan-400/30
+                        transition-all duration-300"></div>
+        <div className="absolute inset-0 rounded-full border border-cyan-400/0 group-hover:border-cyan-400/20
+                        scale-110 transition-all duration-500"></div>
+      </motion.button>
+
       {/* Animated Title */}
       <motion.div
         className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10 pointer-events-none"
@@ -26,35 +58,9 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
-        <motion.h1
-          className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text
-                     bg-gradient-to-r from-purple-200 via-blue-200 to-purple-300
-                     font-['Comic_Neue',_cursive] text-center drop-shadow-2xl"
-          animate={{
-            textShadow: [
-              "0 0 10px rgba(147, 51, 234, 0.5)",
-              "0 0 20px rgba(147, 51, 234, 0.8)",
-              "0 0 10px rgba(147, 51, 234, 0.5)"
-            ]
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 3,
-            ease: "easeInOut"
-          }}
-        >
-          🌟 Solar System Explorer 🌟
-        </motion.h1>
 
-        <motion.p
-          className="text-lg md:text-xl text-purple-200 text-center mt-2
-                     font-['Nunito',_sans-serif] drop-shadow-lg"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          Click on any planet to learn amazing facts! 🚀
-        </motion.p>
+
+
       </motion.div>
 
       {/* Instructions overlay for first-time users */}
@@ -98,6 +104,7 @@ export default function Home() {
         <SolarSystemScene
           onPlanetSelect={handlePlanetSelect}
           selectedPlanet={selectedPlanet}
+          language={language}
         />
       </div>
 

@@ -35,7 +35,8 @@ export async function POST(request: NextRequest) {
       console.log('Using fallback narration, length:', enhancedText.length);
     }
 
-    // Step 2: Convert enhanced text to speech using OpenRouter TTS
+    // Step 2: Try to convert enhanced text to speech using OpenRouter TTS
+    // If that fails, return the enhanced text for browser TTS
     try {
       const audioBuffer = await generateSpeech(enhancedText, useIndonesian, openRouterApiKey);
       console.log('Speech generated successfully, buffer size:', audioBuffer.byteLength);
@@ -49,10 +50,15 @@ export async function POST(request: NextRequest) {
         },
       });
     } catch (speechError) {
-      console.error('Speech generation failed:', speechError);
+      console.error('OpenRouter TTS failed, falling back to enhanced text response:', speechError);
+
+      // Return enhanced text instead of failing completely
+      // The hybrid TTS hook will use this with browser TTS
       return NextResponse.json({
-        error: 'Failed to generate speech audio: ' + (speechError instanceof Error ? speechError.message : 'Unknown error')
-      }, { status: 500 });
+        enhancedText: enhancedText,
+        fallback: true,
+        message: 'Using AI-enhanced text with browser TTS (OpenRouter TTS not available)'
+      }, { status: 200 });
     }
 
   } catch (error) {
@@ -192,10 +198,10 @@ async function generateSpeech(
     if (!response.ok) {
       const errorText = await response.text();
       console.error('TTS API error response:', errorText);
+      console.log('OpenRouter TTS endpoint not available (405 error expected)');
 
-      // If OpenRouter TTS fails, try direct OpenAI API as fallback
-      console.log('Trying direct OpenAI TTS as fallback...');
-      return await generateSpeechOpenAI(text, useIndonesian, apiKey);
+      // OpenRouter doesn't seem to have TTS endpoint, throw error to trigger fallback
+      throw new Error(`OpenRouter TTS not available: ${response.status} - ${errorText}`);
     }
 
     const arrayBuffer = await response.arrayBuffer();
@@ -204,26 +210,9 @@ async function generateSpeech(
 
   } catch (error) {
     console.error('TTS generation error:', error);
-    // Try fallback to OpenAI direct
-    console.log('Attempting OpenAI direct fallback...');
-    try {
-      return await generateSpeechOpenAI(text, useIndonesian, apiKey);
-    } catch (fallbackError) {
-      console.error('Fallback TTS also failed:', fallbackError);
-      throw new Error(`TTS generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
+    // Don't try additional fallbacks here - let the main API handle it
+    throw error;
   }
-}
-
-// Fallback function to use OpenAI directly (if user has OpenAI API key)
-async function generateSpeechOpenAI(
-  text: string,
-  useIndonesian: boolean,
-  apiKey: string
-): Promise<ArrayBuffer> {
-  // This is a fallback - user would need OpenAI API key for this to work
-  // For now, we'll generate a simple text-based audio response
-  throw new Error('Direct OpenAI TTS fallback not implemented. Please check your OpenRouter API key and TTS model configuration.');
 }
 
 // Fallback function for basic narration
