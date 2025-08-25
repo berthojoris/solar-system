@@ -122,8 +122,8 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
 
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-2xl mx-auto bg-gradient-to-br from-slate-900/95 to-purple-900/95
-                       backdrop-blur-md rounded-3xl shadow-2xl border border-purple-300/20 overflow-hidden"
+            className="relative w-full max-w-4xl max-h-[85vh] mx-auto bg-gradient-to-br from-slate-900/95 to-purple-900/95
+                       backdrop-blur-md rounded-2xl shadow-2xl border border-purple-300/20 overflow-hidden"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
@@ -142,14 +142,14 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
 
             {/* Content */}
             <motion.div
-              className="p-8"
+              className="p-4 sm:p-6 lg:p-8 max-h-[calc(85vh-2rem)] overflow-y-auto modal-content"
               variants={contentVariants}
               initial="hidden"
               animate="visible"
             >
               {/* Planet name */}
               <motion.h1
-                className="text-4xl md:text-5xl font-bold text-white mb-2 font-['Comic_Neue',_cursive]"
+                className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 font-['Comic_Neue',_cursive] pr-12"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2, duration: 0.4 }}
@@ -159,7 +159,7 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
 
               {/* Planet type badge */}
               <motion.div
-                className="inline-block px-3 py-1 mb-4 text-sm font-medium text-white bg-purple-500/50
+                className="inline-block px-3 py-1 mb-3 text-xs sm:text-sm font-medium text-white bg-purple-500/50
                            rounded-full border border-purple-300/30"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -170,15 +170,15 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
 
               {/* Planet image placeholder */}
               <motion.div
-                className="w-full h-64 mb-6 bg-gradient-to-r from-purple-500/20 to-blue-500/20
-                           rounded-2xl border border-purple-300/20 flex items-center justify-center overflow-hidden"
+                className="w-full h-32 sm:h-48 lg:h-56 mb-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20
+                           rounded-xl border border-purple-300/20 flex items-center justify-center overflow-hidden"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.4 }}
               >
                 {/* Planet visual representation */}
                 <div
-                  className="w-40 h-40 rounded-full shadow-2xl flex items-center justify-center text-6xl"
+                  className="w-20 h-20 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full shadow-2xl flex items-center justify-center text-3xl sm:text-5xl lg:text-6xl"
                   style={{
                     background: `radial-gradient(circle at 30% 30%, ${planet.color || '#ffffff'}aa, ${planet.color || '#ffffff'}22)`,
                     boxShadow: `0 0 40px ${planet.color || '#ffffff'}44`
@@ -190,7 +190,7 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
 
               {/* Description */}
               <motion.p
-                className="text-lg md:text-xl text-purple-100 mb-6 font-['Nunito',_sans-serif] leading-relaxed"
+                className="text-sm sm:text-base lg:text-lg text-purple-100 mb-4 font-['Nunito',_sans-serif] leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.4 }}
@@ -204,20 +204,20 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.4 }}
               >
-                <h3 className="text-2xl font-bold text-white mb-4 font-['Comic_Neue',_cursive]">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-3 font-['Comic_Neue',_cursive]">
                   Amazing Facts! 🌟
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {planet.facts.map((fact, index) => (
                     <motion.div
                       key={index}
-                      className="flex items-start space-x-3 p-3 bg-white/5 rounded-xl border border-purple-300/10"
+                      className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 bg-white/5 rounded-lg sm:rounded-xl border border-purple-300/10"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.7 + index * 0.1, duration: 0.3 }}
                     >
-                      <span className="text-purple-300 mt-1 flex-shrink-0">✨</span>
-                      <span className="text-purple-50 font-['Nunito',_sans-serif] leading-relaxed">
+                      <span className="text-purple-300 mt-0.5 sm:mt-1 flex-shrink-0 text-sm sm:text-base">✨</span>
+                      <span className="text-purple-50 font-['Nunito',_sans-serif] leading-relaxed text-sm sm:text-base">
                         {fact}
                       </span>
                     </motion.div>
@@ -227,12 +227,12 @@ const PlanetInfoModal: React.FC<PlanetInfoModalProps> = ({ planet, onClose }) =>
 
               {/* Interactive elements */}
               <motion.div
-                className="mt-8 pt-6 border-t border-purple-300/20"
+                className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-purple-300/20"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1, duration: 0.4 }}
               >
-                <p className="text-sm text-purple-200 text-center font-['Nunito',_sans-serif]">
+                <p className="text-xs sm:text-sm text-purple-200 text-center font-['Nunito',_sans-serif]">
                   Click anywhere outside this window or press Escape to continue exploring! 🚀
                 </p>
               </motion.div>
