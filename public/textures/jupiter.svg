@@ -1,34 +1,115 @@
 <svg width="1024" height="512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="jupiterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <!-- Jupiter base gradient -->
+    <radialGradient id="jupiterBase" cx="45%" cy="35%" r="70%">
       <stop offset="0%" style="stop-color:#F4E4BC;stop-opacity:1" />
-      <stop offset="20%" style="stop-color:#D2B48C;stop-opacity:1" />
-      <stop offset="40%" style="stop-color:#CD853F;stop-opacity:1" />
-      <stop offset="60%" style="stop-color:#DEB887;stop-opacity:1" />
-      <stop offset="80%" style="stop-color:#D8CA9D;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#F5DEB3;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#E6D2A6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D8CA9D;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#C4A26A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A0824A;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Jupiter bands gradient (brown) -->
+    <linearGradient id="brownBand" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#D2B48C;stop-opacity:0.8" />
+      <stop offset="20%" style="stop-color:#A0824A;stop-opacity:0.9" />
+      <stop offset="40%" style="stop-color:#8B4513;stop-opacity:1.0" />
+      <stop offset="60%" style="stop-color:#654321;stop-opacity:0.9" />
+      <stop offset="80%" style="stop-color:#8B4513;stop-opacity:1.0" />
+      <stop offset="100%" style="stop-color:#A0824A;stop-opacity:0.8" />
     </linearGradient>
+
+    <!-- Light band gradient -->
+    <linearGradient id="lightBand" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F4E4BC;stop-opacity:0.9" />
+      <stop offset="25%" style="stop-color:#E6D2A6;stop-opacity:1.0" />
+      <stop offset="50%" style="stop-color:#DDD0A7;stop-opacity:1.0" />
+      <stop offset="75%" style="stop-color:#D8CA9D;stop-opacity:1.0" />
+      <stop offset="100%" style="stop-color:#F4E4BC;stop-opacity:0.9" />
+    </linearGradient>
+
+    <!-- Great Red Spot gradient -->
+    <radialGradient id="greatRedSpot" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" style="stop-color:#FF6B47;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#DC143C;stop-opacity:0.9" />
+      <stop offset="60%" style="stop-color:#B22222;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#8B0000;stop-opacity:0.6" />
+    </radialGradient>
+
+    <!-- Storm system gradient -->
+    <radialGradient id="stormSystem" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#F0E68C;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#DAA520;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:0.4" />
+    </radialGradient>
+
+    <!-- Atmospheric texture pattern -->
+    <pattern id="jupiterTexture" x="0" y="0" width="100" height="60" patternUnits="userSpaceOnUse">
+      <rect width="100" height="60" fill="none"/>
+      <path d="M0,20 Q25,15 50,20 Q75,25 100,20" stroke="#C4A26A" stroke-width="1" fill="none" opacity="0.4"/>
+      <path d="M0,40 Q30,35 60,40 Q90,45 100,40" stroke="#8B4513" stroke-width="1" fill="none" opacity="0.5"/>
+    </pattern>
   </defs>
-  <rect width="100%" height="100%" fill="url(#jupiterGradient)"/>
-  <!-- Atmospheric bands -->
-  <rect x="0" y="50" width="1024" height="30" fill="#CD853F" opacity="0.7"/>
-  <rect x="0" y="90" width="1024" height="25" fill="#D2B48C" opacity="0.6"/>
-  <rect x="0" y="130" width="1024" height="35" fill="#DEB887" opacity="0.8"/>
-  <rect x="0" y="180" width="1024" height="40" fill="#D8CA9D" opacity="0.7"/>
-  <rect x="0" y="240" width="1024" height="30" fill="#F4E4BC" opacity="0.6"/>
-  <rect x="0" y="290" width="1024" height="35" fill="#CD853F" opacity="0.5"/>
-  <rect x="0" y="340" width="1024" height="25" fill="#DEB887" opacity="0.7"/>
-  <rect x="0" y="380" width="1024" height="40" fill="#D2B48C" opacity="0.6"/>
-  <rect x="0" y="430" width="1024" height="30" fill="#F5DEB3" opacity="0.8"/>
-  <!-- Great Red Spot -->
-  <ellipse cx="700" cy="300" rx="80" ry="60" fill="#DC143C" opacity="0.9"/>
-  <ellipse cx="700" cy="300" rx="60" ry="45" fill="#B22222" opacity="0.7"/>
-  <ellipse cx="700" cy="300" rx="40" ry="30" fill="#8B0000" opacity="0.5"/>
-  <!-- Turbulent features -->
-  <ellipse cx="300" cy="150" rx="50" ry="25" fill="#A0522D" opacity="0.6"/>
-  <ellipse cx="150" cy="250" rx="40" ry="20" fill="#CD853F" opacity="0.5"/>
-  <ellipse cx="850" cy="400" rx="60" ry="30" fill="#D2691E" opacity="0.4"/>
-  <!-- Band variations -->
-  <path d="M0,200 Q200,190 400,200 Q600,210 800,200 Q900,195 1024,200" stroke="#8B4513" stroke-width="2" fill="none" opacity="0.6"/>
-  <path d="M0,350 Q300,340 600,350 Q800,360 1024,350" stroke="#A0522D" stroke-width="3" fill="none" opacity="0.5"/>
+
+  <!-- Base Jupiter atmosphere -->
+  <rect width="100%" height="100%" fill="url(#jupiterBase)"/>
+
+  <!-- Jupiter's banded structure -->
+  <!-- Light bands (zones) -->
+  <rect x="0" y="50" width="1024" height="40" fill="url(#lightBand)" opacity="0.9"/>
+  <rect x="0" y="130" width="1024" height="50" fill="url(#lightBand)" opacity="0.8"/>
+  <rect x="0" y="220" width="1024" height="45" fill="url(#lightBand)" opacity="0.9"/>
+  <rect x="0" y="310" width="1024" height="40" fill="url(#lightBand)" opacity="0.8"/>
+  <rect x="0" y="390" width="1024" height="35" fill="url(#lightBand)" opacity="0.9"/>
+
+  <!-- Dark bands (belts) -->
+  <rect x="0" y="90" width="1024" height="40" fill="url(#brownBand)" opacity="0.8"/>
+  <rect x="0" y="180" width="1024" height="40" fill="url(#brownBand)" opacity="0.9"/>
+  <rect x="0" y="265" width="1024" height="45" fill="url(#brownBand)" opacity="0.8"/>
+  <rect x="0" y="350" width="1024" height="40" fill="url(#brownBand)" opacity="0.9"/>
+  <rect x="0" y="425" width="1024" height="35" fill="url(#brownBand)" opacity="0.8"/>
+
+  <!-- Band variations and turbulence -->
+  <path d="M0,110 Q200,105 400,110 Q600,115 800,110 Q900,108 1024,110"
+        stroke="#654321" stroke-width="8" fill="none" opacity="0.6"/>
+  <path d="M0,200 Q150,195 300,200 Q450,205 600,200 Q750,195 900,200 Q950,198 1024,200"
+        stroke="#A0824A" stroke-width="6" fill="none" opacity="0.7"/>
+  <path d="M0,285 Q250,280 500,285 Q750,290 1024,285"
+        stroke="#8B4513" stroke-width="10" fill="none" opacity="0.8"/>
+
+  <!-- The Great Red Spot -->
+  <ellipse cx="300" cy="280" rx="70" ry="45" fill="url(#greatRedSpot)" opacity="0.9"/>
+  <ellipse cx="295" cy="275" rx="50" ry="32" fill="#FF4500" opacity="0.7"/>
+  <ellipse cx="290" cy="270" rx="30" ry="20" fill="#DC143C" opacity="0.8"/>
+
+  <!-- Smaller storm systems -->
+  <ellipse cx="600" cy="150" rx="25" ry="15" fill="url(#stormSystem)" opacity="0.7"/>
+  <ellipse cx="750" cy="320" rx="30" ry="18" fill="url(#stormSystem)" opacity="0.8"/>
+  <ellipse cx="150" cy="400" rx="20" ry="12" fill="url(#stormSystem)" opacity="0.6"/>
+  <ellipse cx="850" cy="180" rx="28" ry="16" fill="url(#stormSystem)" opacity="0.7"/>
+
+  <!-- White oval storms -->
+  <ellipse cx="500" cy="120" rx="18" ry="10" fill="#F0F8FF" opacity="0.8"/>
+  <ellipse cx="400" cy="380" rx="22" ry="12" fill="#F0F8FF" opacity="0.9"/>
+  <ellipse cx="700" cy="220" rx="16" ry="9" fill="#F0F8FF" opacity="0.7"/>
+  <ellipse cx="900" cy="350" rx="20" ry="11" fill="#F0F8FF" opacity="0.8"/>
+
+  <!-- Atmospheric vortices and eddies -->
+  <path d="M450,200 Q470,190 490,200 Q510,210 530,200 Q550,190 570,200 Q550,210 530,220 Q510,230 490,220 Q470,210 450,200"
+        fill="#DAA520" opacity="0.5"/>
+  <path d="M750,280 Q770,270 790,280 Q810,290 830,280 Q810,290 790,300 Q770,310 750,300 Q730,290 750,280"
+        fill="#B8860B" opacity="0.6"/>
+
+  <!-- Band edge turbulence -->
+  <path d="M0,130 Q100,125 200,130 Q300,135 400,130 Q500,125 600,130 Q700,135 800,130 Q900,125 1024,130"
+        stroke="#DDD0A7" stroke-width="4" fill="none" opacity="0.5"/>
+  <path d="M0,310 Q150,305 300,310 Q450,315 600,310 Q750,305 900,310 Q950,308 1024,310"
+        stroke="#C4A26A" stroke-width="5" fill="none" opacity="0.6"/>
+
+  <!-- Atmospheric texture overlay -->
+  <rect width="100%" height="100%" fill="url(#jupiterTexture)" opacity="0.3"/>
+
+  <!-- Equatorial jet streams -->
+  <path d="M0,256 Q512,246 1024,256" stroke="#F4E4BC" stroke-width="3" fill="none" opacity="0.4"/>
+  <path d="M0,256 Q256,266 512,256 Q768,246 1024,256" stroke="#A0824A" stroke-width="2" fill="none" opacity="0.5"/>
 </svg>

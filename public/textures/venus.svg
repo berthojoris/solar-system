@@ -1,24 +1,75 @@
 <svg width="1024" height="512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="venusGradient" cx="0.3" cy="0.3" r="0.8">
-      <stop offset="0%" style="stop-color:#FFEB3B;stop-opacity:1" />
-      <stop offset="30%" style="stop-color:#FFC649;stop-opacity:1" />
-      <stop offset="70%" style="stop-color:#FF9800;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#E65100;stop-opacity:1" />
+    <!-- Venus base atmosphere gradient -->
+    <radialGradient id="venusBase" cx="45%" cy="35%" r="75%">
+      <stop offset="0%" style="stop-color:#FFF2CC;stop-opacity:1" />
+      <stop offset="20%" style="stop-color:#FFE066;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFD633;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#E6B800;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#CC9900;stop-opacity:1" />
     </radialGradient>
-    <linearGradient id="venusCloud1" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#FFD54F;stop-opacity:0.6" />
-      <stop offset="100%" style="stop-color:#FFAB40;stop-opacity:0.3" />
+
+    <!-- Cloud swirl gradient -->
+    <radialGradient id="venusSwirl" cx="30%" cy="40%" r="60%">
+      <stop offset="0%" style="stop-color:#FFEB99;stop-opacity:0.8" />
+      <stop offset="40%" style="stop-color:#FFD633;stop-opacity:0.6" />
+      <stop offset="70%" style="stop-color:#E6B800;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#B8940D;stop-opacity:0.2" />
+    </radialGradient>
+
+    <!-- Atmospheric bands -->
+    <linearGradient id="venusBands" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFE066;stop-opacity:0.6" />
+      <stop offset="25%" style="stop-color:#E6B800;stop-opacity:0.4" />
+      <stop offset="50%" style="stop-color:#FFD633;stop-opacity:0.7" />
+      <stop offset="75%" style="stop-color:#CC9900;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#FFE066;stop-opacity:0.6" />
     </linearGradient>
+
+    <!-- Venus cloud texture -->
+    <pattern id="venusTexture" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+      <rect width="200" height="200" fill="#FFD633" opacity="0.3"/>
+      <path d="M0,50 Q50,30 100,50 Q150,70 200,50" stroke="#E6B800" stroke-width="8" fill="none" opacity="0.5"/>
+      <path d="M0,100 Q60,80 120,100 Q180,120 200,100" stroke="#FFEB99" stroke-width="6" fill="none" opacity="0.6"/>
+      <path d="M0,150 Q40,130 80,150 Q120,170 160,150 Q180,140 200,150" stroke="#CC9900" stroke-width="4" fill="none" opacity="0.4"/>
+    </pattern>
   </defs>
-  <rect width="100%" height="100%" fill="url(#venusGradient)"/>
-  <!-- Atmospheric bands -->
-  <path d="M0,100 Q256,80 512,100 T1024,100" stroke="url(#venusCloud1)" stroke-width="20" fill="none" opacity="0.7"/>
-  <path d="M0,200 Q200,220 400,200 Q600,180 800,200 Q900,210 1024,200" stroke="#FFCC02" stroke-width="15" fill="none" opacity="0.6"/>
-  <path d="M0,300 Q300,280 600,300 Q800,320 1024,300" stroke="#FFB300" stroke-width="12" fill="none" opacity="0.5"/>
-  <path d="M0,400 Q400,420 800,400 Q900,390 1024,400" stroke="#FF8F00" stroke-width="8" fill="none" opacity="0.4"/>
-  <!-- Cloud swirls -->
-  <ellipse cx="300" cy="150" rx="80" ry="30" fill="#FFCA28" opacity="0.4"/>
-  <ellipse cx="700" cy="250" rx="100" ry="40" fill="#FFC107" opacity="0.5"/>
-  <ellipse cx="150" cy="350" rx="60" ry="25" fill="#FFB74D" opacity="0.3"/>
+
+  <!-- Base atmosphere -->
+  <rect width="100%" height="100%" fill="url(#venusBase)"/>
+
+  <!-- Atmospheric banding -->
+  <rect width="100%" height="100%" fill="url(#venusBands)" opacity="0.7"/>
+
+  <!-- Major swirl patterns -->
+  <path d="M0,200 Q200,150 400,200 Q600,250 800,200 Q900,175 1024,200"
+        stroke="#E6B800" stroke-width="25" fill="none" opacity="0.6"/>
+  <path d="M0,250 Q150,220 300,250 Q450,280 600,250 Q750,220 900,250 Q950,240 1024,250"
+        stroke="#FFE066" stroke-width="20" fill="none" opacity="0.7"/>
+  <path d="M0,300 Q100,270 200,300 Q350,330 500,300 Q650,270 800,300 Q900,315 1024,300"
+        stroke="#FFEB99" stroke-width="15" fill="none" opacity="0.8"/>
+
+  <!-- Swirling cloud formations -->
+  <ellipse cx="250" cy="150" rx="80" ry="40" fill="url(#venusSwirl)" transform="rotate(25 250 150)" opacity="0.6"/>
+  <ellipse cx="600" cy="350" rx="100" ry="50" fill="url(#venusSwirl)" transform="rotate(-15 600 350)" opacity="0.7"/>
+  <ellipse cx="800" cy="100" rx="60" ry="30" fill="url(#venusSwirl)" transform="rotate(45 800 100)" opacity="0.5"/>
+
+  <!-- Atmospheric vortices -->
+  <path d="M150,300 Q200,280 250,300 Q300,320 350,300 Q325,275 300,250 Q275,225 250,200 Q200,220 150,240 Q125,265 150,300"
+        fill="#FFEB99" opacity="0.5"/>
+  <path d="M700,200 Q750,180 800,200 Q850,220 900,200 Q875,175 850,150 Q825,125 800,100 Q750,120 700,140 Q675,165 700,200"
+        fill="#FFD633" opacity="0.6"/>
+
+  <!-- Surface texture overlay -->
+  <rect width="100%" height="100%" fill="url(#venusTexture)" opacity="0.4"/>
+
+  <!-- Bright cloud highlights -->
+  <ellipse cx="400" cy="180" rx="40" ry="15" fill="#FFF2CC" opacity="0.8" transform="rotate(30 400 180)"/>
+  <ellipse cx="100" cy="400" rx="50" ry="20" fill="#FFF2CC" opacity="0.6" transform="rotate(-20 100 400)"/>
+  <ellipse cx="900" cy="380" rx="35" ry="12" fill="#FFEB99" opacity="0.7" transform="rotate(60 900 380)"/>
+
+  <!-- Storm systems -->
+  <circle cx="500" cy="100" r="30" fill="#E6B800" opacity="0.5"/>
+  <circle cx="480" cy="90" r="20" fill="#CC9900" opacity="0.6"/>
+  <circle cx="490" cy="95" r="10" fill="#B8940D" opacity="0.7"/>
 </svg>

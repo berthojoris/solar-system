@@ -1,33 +1,132 @@
 <svg width="1024" height="512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="neptuneGradient" cx="0.3" cy="0.3" r="0.8">
-      <stop offset="0%" style="stop-color:#4169E1;stop-opacity:1" />
-      <stop offset="40%" style="stop-color:#4B70DD;stop-opacity:1" />
-      <stop offset="80%" style="stop-color:#1E90FF;stop-opacity:1" />
+    <!-- Neptune base gradient -->
+    <radialGradient id="neptuneBase" cx="40%" cy="30%" r="75%">
+      <stop offset="0%" style="stop-color:#87CEFA;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#4169E1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#4B70DD;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#191970;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#000080;stop-opacity:1" />
     </radialGradient>
+
+    <!-- Deep atmosphere gradient -->
+    <radialGradient id="deepAtmosphere" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" style="stop-color:#B0E0E6;stop-opacity:0.8" />
+      <stop offset="30%" style="stop-color:#4169E1;stop-opacity:0.6" />
+      <stop offset="60%" style="stop-color:#191970;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#000080;stop-opacity:0.2" />
+    </radialGradient>
+
+    <!-- Wind band gradients -->
+    <linearGradient id="windBand1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#87CEFA;stop-opacity:0.7" />
+      <stop offset="30%" style="stop-color:#4169E1;stop-opacity:0.9" />
+      <stop offset="70%" style="stop-color:#4B70DD;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#87CEFA;stop-opacity:0.6" />
+    </linearGradient>
+
+    <linearGradient id="windBand2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4B70DD;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#191970;stop-opacity:1.0" />
+      <stop offset="100%" style="stop-color:#4B70DD;stop-opacity:0.8" />
+    </linearGradient>
+
+    <!-- Great Dark Spot gradient -->
+    <radialGradient id="darkSpot" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" style="stop-color:#000080;stop-opacity:0.9" />
+      <stop offset="40%" style="stop-color:#191970;stop-opacity:0.8" />
+      <stop offset="80%" style="stop-color:#4B70DD;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#4169E1;stop-opacity:0.2" />
+    </radialGradient>
+
+    <!-- Storm system gradient -->
+    <radialGradient id="neptuneStorm" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#87CEFA;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#4169E1;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#191970;stop-opacity:0.4" />
+    </radialGradient>
+
+    <!-- High-speed wind texture -->
+    <pattern id="neptuneTexture" x="0" y="0" width="200" height="100" patternUnits="userSpaceOnUse">
+      <rect width="200" height="100" fill="none"/>
+      <path d="M0,30 Q50,25 100,30 Q150,35 200,30" stroke="#4169E1" stroke-width="2" fill="none" opacity="0.4"/>
+      <path d="M0,50 Q60,45 120,50 Q180,55 200,50" stroke="#87CEFA" stroke-width="1" fill="none" opacity="0.5"/>
+      <path d="M0,70 Q40,65 80,70 Q120,75 160,70 Q180,68 200,70" stroke="#191970" stroke-width="2" fill="none" opacity="0.6"/>
+    </pattern>
   </defs>
-  <rect width="100%" height="100%" fill="url(#neptuneGradient)"/>
-  <!-- Atmospheric bands -->
-  <rect x="0" y="80" width="1024" height="20" fill="#6495ED" opacity="0.6"/>
-  <rect x="0" y="120" width="1024" height="15" fill="#4682B4" opacity="0.5"/>
-  <rect x="0" y="155" width="1024" height="25" fill="#4169E1" opacity="0.7"/>
-  <rect x="0" y="200" width="1024" height="30" fill="#1E90FF" opacity="0.8"/>
-  <rect x="0" y="250" width="1024" height="20" fill="#4B70DD" opacity="0.6"/>
-  <rect x="0" y="290" width="1024" height="35" fill="#4682B4" opacity="0.7"/>
-  <rect x="0" y="345" width="1024" height="25" fill="#6495ED" opacity="0.5"/>
-  <rect x="0" y="385" width="1024" height="30" fill="#000080" opacity="0.8"/>
-  <rect x="0" y="430" width="1024" height="20" fill="#191970" opacity="0.6"/>
-  <!-- Great Dark Spot -->
-  <ellipse cx="400" cy="200" rx="90" ry="60" fill="#000080" opacity="0.9"/>
-  <ellipse cx="400" cy="200" rx="70" ry="45" fill="#191970" opacity="0.7"/>
-  <ellipse cx="400" cy="200" rx="50" ry="30" fill="#00008B" opacity="0.5"/>
-  <!-- Wind features and storms -->
-  <ellipse cx="700" cy="300" rx="60" ry="30" fill="#4682B4" opacity="0.6"/>
-  <ellipse cx="150" cy="150" rx="40" ry="20" fill="#6495ED" opacity="0.4"/>
-  <ellipse cx="850" cy="350" rx="70" ry="35" fill="#1E90FF" opacity="0.3"/>
-  <!-- High-speed wind streams -->
-  <path d="M0,180 Q200,170 400,180 Q600,190 800,180 Q900,175 1024,180" stroke="#87CEEB" stroke-width="2" fill="none" opacity="0.5"/>
-  <path d="M0,320 Q300,310 600,320 Q800,330 1024,320" stroke="#B0C4DE" stroke-width="3" fill="none" opacity="0.4"/>
-  <path d="M0,400 Q400,390 800,400 Q900,405 1024,400" stroke="#4682B4" stroke-width="1" fill="none" opacity="0.6"/>
+
+  <!-- Base Neptune atmosphere -->
+  <rect width="100%" height="100%" fill="url(#neptuneBase)"/>
+
+  <!-- Deep atmosphere overlay -->
+  <rect width="100%" height="100%" fill="url(#deepAtmosphere)" opacity="0.7"/>
+
+  <!-- Dynamic wind bands -->
+  <rect x="0" y="80" width="1024" height="50" fill="url(#windBand1)" opacity="0.8"/>
+  <rect x="0" y="150" width="1024" height="40" fill="url(#windBand2)" opacity="0.9"/>
+  <rect x="0" y="220" width="1024" height="60" fill="url(#windBand1)" opacity="0.7"/>
+  <rect x="0" y="300" width="1024" height="45" fill="url(#windBand2)" opacity="0.8"/>
+  <rect x="0" y="370" width="1024" height="50" fill="url(#windBand1)" opacity="0.6"/>
+
+  <!-- The Great Dark Spot (similar to Jupiter's Great Red Spot) -->
+  <ellipse cx="350" cy="200" rx="80" ry="55" fill="url(#darkSpot)" opacity="0.9"/>
+  <ellipse cx="340" cy="190" rx="60" ry="40" fill="#000080" opacity="0.8"/>
+  <ellipse cx="335" cy="185" rx="40" ry="25" fill="#191970" opacity="0.7"/>
+
+  <!-- High-speed wind streaks -->
+  <path d="M0,180 Q200,170 400,180 Q600,190 800,180 Q900,175 1024,180"
+        stroke="#87CEFA" stroke-width="8" fill="none" opacity="0.6"/>
+  <path d="M0,250 Q150,240 300,250 Q450,260 600,250 Q750,240 900,250 Q950,245 1024,250"
+        stroke="#4169E1" stroke-width="6" fill="none" opacity="0.7"/>
+  <path d="M0,320 Q250,310 500,320 Q750,330 1024,320"
+        stroke="#B0E0E6" stroke-width="10" fill="none" opacity="0.8"/>
+
+  <!-- Secondary dark spots and storm systems -->
+  <ellipse cx="700" cy="300" rx="40" ry="25" fill="url(#neptuneStorm)" opacity="0.7"/>
+  <ellipse cx="150" cy="350" rx="35" ry="20" fill="url(#neptuneStorm)" opacity="0.8"/>
+  <ellipse cx="850" cy="150" rx="30" ry="18" fill="url(#neptuneStorm)" opacity="0.6"/>
+
+  <!-- Bright companion clouds (following the Great Dark Spot) -->
+  <ellipse cx="450" cy="180" rx="25" ry="12" fill="#B0E0E6" opacity="0.9"/>
+  <ellipse cx="480" cy="190" rx="20" ry="10" fill="#87CEFA" opacity="0.8"/>
+  <ellipse cx="500" cy="200" rx="18" ry="9" fill="#E6F3FF" opacity="0.7"/>
+
+  <!-- Smaller cloud formations -->
+  <ellipse cx="200" cy="120" rx="20" ry="8" fill="#87CEFA" opacity="0.7"/>
+  <ellipse cx="600" cy="400" rx="25" ry="10" fill="#B0E0E6" opacity="0.8"/>
+  <ellipse cx="800" cy="250" rx="18" ry="7" fill="#87CEFA" opacity="0.6"/>
+  <ellipse cx="400" cy="80" rx="22" ry="9" fill="#E6F3FF" opacity="0.8"/>
+
+  <!-- Supersonic wind patterns -->
+  <path d="M0,200 Q300,190 600,200 Q800,210 1024,200"
+        stroke="#4B70DD" stroke-width="4" fill="none" opacity="0.5"/>
+  <path d="M0,280 Q200,270 400,280 Q600,290 800,280 Q900,275 1024,280"
+        stroke="#191970" stroke-width="5" fill="none" opacity="0.6"/>
+
+  <!-- Atmospheric vortices -->
+  <path d="M500,120 Q520,110 540,120 Q560,130 580,120 Q560,130 540,140 Q520,150 500,140 Q480,130 500,120"
+        fill="#4169E1" opacity="0.6"/>
+  <path d="M750,350 Q770,340 790,350 Q810,360 830,350 Q810,360 790,370 Q770,380 750,370 Q730,360 750,350"
+        fill="#191970" opacity="0.7"/>
+
+  <!-- Jet stream indicators -->
+  <path d="M0,160 Q100,155 200,160 Q300,165 400,160 Q500,155 600,160 Q700,165 800,160 Q900,155 1024,160"
+        stroke="#87CEFA" stroke-width="3" fill="none" opacity="0.4"/>
+  <path d="M0,340 Q150,335 300,340 Q450,345 600,340 Q750,335 900,340 Q950,338 1024,340"
+        stroke="#4169E1" stroke-width="3" fill="none" opacity="0.5"/>
+
+  <!-- High-altitude atmospheric texture -->
+  <rect width="100%" height="100%" fill="url(#neptuneTexture)" opacity="0.3"/>
+
+  <!-- Methane absorption bands (giving Neptune its blue color) -->
+  <rect width="100%" height="100%" fill="#4169E1" opacity="0.1"/>
+
+  <!-- Polar regions -->
+  <ellipse cx="512" cy="60" rx="300" ry="30" fill="#87CEFA" opacity="0.4"/>
+  <ellipse cx="512" cy="452" rx="280" ry="25" fill="#87CEFA" opacity="0.3"/>
+
+  <!-- Temperature variations -->
+  <circle cx="300" cy="250" r="15" fill="#000080" opacity="0.3"/>
+  <circle cx="700" cy="180" r="18" fill="#191970" opacity="0.4"/>
+  <circle cx="500" cy="350" r="12" fill="#4B70DD" opacity="0.5"/>
 </svg>

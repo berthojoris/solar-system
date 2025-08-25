@@ -1,28 +1,116 @@
 <svg width="1024" height="512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="marsGradient" cx="0.3" cy="0.3" r="0.8">
-      <stop offset="0%" style="stop-color:#FF6347;stop-opacity:1" />
-      <stop offset="40%" style="stop-color:#CD5C5C;stop-opacity:1" />
-      <stop offset="80%" style="stop-color:#A0522D;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#8B4513;stop-opacity:1" />
+    <!-- Mars base gradient -->
+    <radialGradient id="marsBase" cx="40%" cy="30%" r="75%">
+      <stop offset="0%" style="stop-color:#FF6B47;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#E55B3C;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#CD5C5C;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#B22222;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B0000;stop-opacity:1" />
     </radialGradient>
+
+    <!-- Rust/iron oxide gradient -->
+    <radialGradient id="rustGradient" cx="60%" cy="40%" r="50%">
+      <stop offset="0%" style="stop-color:#FF8C69;stop-opacity:0.8" />
+      <stop offset="40%" style="stop-color:#FF6347;stop-opacity:0.6" />
+      <stop offset="70%" style="stop-color:#DC143C;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#A0522D;stop-opacity:0.2" />
+    </radialGradient>
+
+    <!-- Polar ice cap gradient -->
+    <radialGradient id="marsIce" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" style="stop-color:#F0F8FF;stop-opacity:0.9" />
+      <stop offset="60%" style="stop-color:#E0F6FF;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#FFB6C1;stop-opacity:0.4" />
+    </radialGradient>
+
+    <!-- Dust storm gradient -->
+    <linearGradient id="dustStorm" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#DEB887;stop-opacity:0.6" />
+      <stop offset="30%" style="stop-color:#CD853F;stop-opacity:0.4" />
+      <stop offset="70%" style="stop-color:#A0522D;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#8B4513;stop-opacity:0.3" />
+    </linearGradient>
+
+    <!-- Canyon shadow -->
+    <linearGradient id="canyonShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B0000;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#A0522D;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#CD853F;stop-opacity:0.2" />
+    </linearGradient>
+
+    <!-- Surface texture pattern -->
+    <pattern id="marsTexture" x="0" y="0" width="150" height="150" patternUnits="userSpaceOnUse">
+      <rect width="150" height="150" fill="#CD5C5C" opacity="0.3"/>
+      <circle cx="30" cy="40" r="12" fill="#8B0000" opacity="0.6"/>
+      <circle cx="80" cy="30" r="8" fill="#A0522D" opacity="0.5"/>
+      <circle cx="120" cy="70" r="15" fill="#8B0000" opacity="0.7"/>
+      <circle cx="60" cy="110" r="10" fill="#A0522D" opacity="0.6"/>
+      <path d="M0,90 Q40,85 80,90 Q120,95 150,90" stroke="#8B0000" stroke-width="2" fill="none" opacity="0.4"/>
+    </pattern>
   </defs>
-  <rect width="100%" height="100%" fill="url(#marsGradient)"/>
-  <!-- Polar ice caps -->
-  <ellipse cx="512" cy="30" rx="200" ry="20" fill="#F0F8FF" opacity="0.8"/>
-  <ellipse cx="512" cy="482" rx="180" ry="18" fill="#F5F5F5" opacity="0.7"/>
-  <!-- Valleys and canyons -->
-  <path d="M200,200 Q400,180 600,200 Q800,220 1024,200" stroke="#8B4513" stroke-width="4" fill="none" opacity="0.6"/>
-  <path d="M0,300 Q300,280 600,300 Q800,320 1024,300" stroke="#A0522D" stroke-width="6" fill="none" opacity="0.7"/>
-  <!-- Olympus Mons (large volcano) -->
-  <circle cx="300" cy="250" r="50" fill="#DC143C" opacity="0.8"/>
-  <circle cx="300" cy="250" r="30" fill="#B22222" opacity="0.6"/>
-  <!-- Dust storms and surface features -->
-  <ellipse cx="700" cy="150" rx="80" ry="30" fill="#DEB887" opacity="0.4"/>
-  <ellipse cx="150" cy="350" rx="100" ry="40" fill="#D2691E" opacity="0.3"/>
-  <ellipse cx="850" cy="300" rx="60" ry="25" fill="#CD853F" opacity="0.5"/>
+
+  <!-- Base Martian surface -->
+  <rect width="100%" height="100%" fill="url(#marsBase)"/>
+
+  <!-- Rust/iron oxide regions -->
+  <rect width="100%" height="100%" fill="url(#rustGradient)" opacity="0.7"/>
+
+  <!-- Valles Marineris (great canyon system) -->
+  <path d="M200,220 Q400,210 600,220 Q700,225 800,220 Q900,215 1000,220 L1000,280 Q900,285 800,280 Q700,275 600,280 Q400,290 200,280 Z"
+        fill="url(#canyonShadow)" opacity="0.8"/>
+  <path d="M250,240 Q450,235 650,240 Q750,242 850,240 L850,260 Q750,258 650,260 Q450,265 250,260 Z"
+        fill="#A0522D" opacity="0.6"/>
+
+  <!-- Olympus Mons (largest volcano) -->
+  <ellipse cx="150" cy="200" rx="80" ry="60" fill="#FF6B47" opacity="0.8"/>
+  <ellipse cx="140" cy="190" rx="50" ry="35" fill="#FF8C69" opacity="0.9"/>
+  <ellipse cx="135" cy="185" rx="25" ry="18" fill="#FFA07A" opacity="1.0"/>
+  <circle cx="135" cy="185" r="8" fill="#8B0000" opacity="0.6"/>
+
+  <!-- Tharsis volcanic region -->
+  <ellipse cx="100" cy="150" rx="40" ry="30" fill="#DC143C" opacity="0.7"/>
+  <ellipse cx="80" cy="280" rx="35" ry="25" fill="#DC143C" opacity="0.6"/>
+  <ellipse cx="180" cy="320" rx="45" ry="35" fill="#DC143C" opacity="0.8"/>
+
   <!-- Impact craters -->
-  <circle cx="500" cy="120" r="15" fill="#8B4513" opacity="0.6"/>
-  <circle cx="800" cy="400" r="20" fill="#A0522D" opacity="0.7"/>
-  <circle cx="150" cy="150" r="12" fill="#654321" opacity="0.5"/>
+  <circle cx="400" cy="150" r="40" fill="#8B0000" opacity="0.8"/>
+  <circle cx="390" cy="140" r="25" fill="#A0522D" opacity="0.6"/>
+  <circle cx="395" cy="145" r="10" fill="#654321" opacity="0.9"/>
+
+  <circle cx="700" cy="350" r="50" fill="#8B0000" opacity="0.7"/>
+  <circle cx="685" cy="335" r="30" fill="#CD5C5C" opacity="0.5"/>
+  <circle cx="690" cy="340" r="12" fill="#654321" opacity="0.8"/>
+
+  <circle cx="850" cy="120" r="30" fill="#8B0000" opacity="0.9"/>
+  <circle cx="840" cy="110" r="18" fill="#A0522D" opacity="0.6"/>
+
+  <!-- Smaller craters -->
+  <circle cx="500" cy="80" r="20" fill="#8B0000" opacity="0.6"/>
+  <circle cx="600" cy="400" r="25" fill="#8B0000" opacity="0.7"/>
+  <circle cx="300" cy="380" r="18" fill="#A0522D" opacity="0.8"/>
+  <circle cx="750" cy="180" r="22" fill="#8B0000" opacity="0.5"/>
+  <circle cx="950" cy="300" r="15" fill="#A0522D" opacity="0.9"/>
+
+  <!-- Polar ice caps -->
+  <ellipse cx="512" cy="40" rx="200" ry="25" fill="url(#marsIce)" opacity="0.8"/>
+  <ellipse cx="512" cy="472" rx="180" ry="20" fill="url(#marsIce)" opacity="0.7"/>
+
+  <!-- Dust storm regions -->
+  <path d="M600,300 Q700,290 800,300 Q850,310 900,300 Q950,295 1024,300 L1024,350 Q950,345 900,350 Q850,360 800,350 Q700,340 600,350 Z"
+        fill="url(#dustStorm)" opacity="0.6"/>
+
+  <!-- Surface texture overlay -->
+  <rect width="100%" height="100%" fill="url(#marsTexture)" opacity="0.4"/>
+
+  <!-- Dried river beds/channels -->
+  <path d="M300,100 Q350,120 400,110 Q450,130 500,120 Q550,140 600,130"
+        stroke="#A0522D" stroke-width="6" fill="none" opacity="0.5"/>
+  <path d="M200,400 Q250,390 300,400 Q350,410 400,400 Q450,395 500,400"
+        stroke="#8B4513" stroke-width="4" fill="none" opacity="0.6"/>
+
+  <!-- Rock formations/mesas -->
+  <ellipse cx="800" cy="400" rx="30" ry="15" fill="#A0522D" opacity="0.8"/>
+  <ellipse cx="900" cy="100" rx="25" ry="12" fill="#CD853F" opacity="0.7"/>
+  <ellipse cx="400" cy="300" rx="35" ry="18" fill="#A0522D" opacity="0.6"/>
 </svg>

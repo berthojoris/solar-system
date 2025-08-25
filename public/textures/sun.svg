@@ -1,24 +1,60 @@
 <svg width="1024" height="512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="sunGradient" cx="0.3" cy="0.3" r="0.8">
-      <stop offset="0%" style="stop-color:#FFEB3B;stop-opacity:1" />
-      <stop offset="30%" style="stop-color:#FFC107;stop-opacity:1" />
-      <stop offset="70%" style="stop-color:#FF9800;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#FF5722;stop-opacity:1" />
+    <!-- Main sun gradient -->
+    <radialGradient id="sunCore" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" style="stop-color:#FFF4E6;stop-opacity:1" />
+      <stop offset="20%" style="stop-color:#FFE135;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FF8C00;stop-opacity:1" />
+      <stop offset="80%" style="stop-color:#FF6B00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E55B00;stop-opacity:1" />
     </radialGradient>
-    <filter id="sunGlow">
-      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+
+    <!-- Surface texture gradient -->
+    <radialGradient id="sunSurface" cx="30%" cy="30%" r="80%">
+      <stop offset="0%" style="stop-color:#FFFF99;stop-opacity:0.8" />
+      <stop offset="40%" style="stop-color:#FFD700;stop-opacity:0.6" />
+      <stop offset="70%" style="stop-color:#FF8C00;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#FF4500;stop-opacity:0.2" />
+    </radialGradient>
+
+    <!-- Glow effect -->
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#FFE135;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#FF8C00;stop-opacity:0.3" />
+      <stop offset="80%" style="stop-color:#FF6B00;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#E55B00;stop-opacity:0.8" />
+    </radialGradient>
+
+    <!-- Solar flares pattern -->
+    <pattern id="solarFlares" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+      <path d="M0,100 Q50,80 100,100 T200,100" stroke="#FFFF00" stroke-width="2" fill="none" opacity="0.4"/>
+      <path d="M0,50 Q50,30 100,50 T200,50" stroke="#FFD700" stroke-width="3" fill="none" opacity="0.3"/>
+      <path d="M0,150 Q50,130 100,150 T200,150" stroke="#FF8C00" stroke-width="2" fill="none" opacity="0.5"/>
+    </pattern>
   </defs>
-  <rect width="100%" height="100%" fill="url(#sunGradient)"/>
-  <circle cx="300" cy="150" r="80" fill="#FFD54F" opacity="0.6"/>
-  <circle cx="700" cy="250" r="60" fill="#FFAB40" opacity="0.5"/>
-  <circle cx="150" cy="350" r="40" fill="#FF8F00" opacity="0.4"/>
-  <circle cx="850" cy="100" r="50" fill="#FFB300" opacity="0.3"/>
-  <path d="M0,200 Q256,180 512,200 T1024,200" stroke="#FFCA28" stroke-width="2" fill="none" opacity="0.6"/>
-  <path d="M0,300 Q256,320 512,300 T1024,300" stroke="#FFB74D" stroke-width="3" fill="none" opacity="0.5"/>
+
+  <!-- Background glow -->
+  <rect width="100%" height="100%" fill="url(#sunGlow)" opacity="0.8"/>
+
+  <!-- Main sun body -->
+  <rect width="100%" height="100%" fill="url(#sunCore)"/>
+
+  <!-- Surface texture overlay -->
+  <rect width="100%" height="100%" fill="url(#sunSurface)"/>
+
+  <!-- Solar flares pattern -->
+  <rect width="100%" height="100%" fill="url(#solarFlares)" opacity="0.6"/>
+
+  <!-- Hot spots for realism -->
+  <circle cx="300" cy="200" r="80" fill="#FFFF99" opacity="0.7"/>
+  <circle cx="700" cy="300" r="60" fill="#FFE135" opacity="0.8"/>
+  <circle cx="150" cy="350" r="40" fill="#FFFF66" opacity="0.6"/>
+  <circle cx="850" cy="150" r="50" fill="#FFD700" opacity="0.5"/>
+
+  <!-- Surface granulation effect -->
+  <circle cx="400" cy="100" r="20" fill="#FFF4E6" opacity="0.4"/>
+  <circle cx="600" cy="250" r="15" fill="#FFF4E6" opacity="0.5"/>
+  <circle cx="200" cy="300" r="25" fill="#FFE135" opacity="0.3"/>
+  <circle cx="800" cy="400" r="18" fill="#FFF4E6" opacity="0.4"/>
+  <circle cx="500" cy="400" r="22" fill="#FFE135" opacity="0.6"/>
 </svg>

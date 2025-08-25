@@ -1,28 +1,62 @@
 <svg width="1024" height="512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="uranusGradient" cx="0.3" cy="0.3" r="0.8">
-      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
-      <stop offset="40%" style="stop-color:#4FD0E3;stop-opacity:1" />
-      <stop offset="80%" style="stop-color:#20B2AA;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#008B8B;stop-opacity:1" />
-    </radialGradient>
+    <!-- Simplified Uranus base gradient -->
+    <linearGradient id="uranusBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E0F6FF"/>
+      <stop offset="25%" style="stop-color:#87CEEB"/>
+      <stop offset="50%" style="stop-color:#4FD0E3"/>
+      <stop offset="75%" style="stop-color:#2E8B57"/>
+      <stop offset="100%" style="stop-color:#006B96"/>
+    </linearGradient>
+
+    <!-- Vertical bands (due to 98° tilt) -->
+    <linearGradient id="verticalBand1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#B0E0E6"/>
+      <stop offset="50%" style="stop-color:#4FD0E3"/>
+      <stop offset="100%" style="stop-color:#B0E0E6"/>
+    </linearGradient>
+
+    <linearGradient id="verticalBand2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#87CEEB"/>
+      <stop offset="50%" style="stop-color:#2E8B57"/>
+      <stop offset="100%" style="stop-color:#87CEEB"/>
+    </linearGradient>
   </defs>
-  <rect width="100%" height="100%" fill="url(#uranusGradient)"/>
-  <!-- Faint atmospheric bands -->
-  <rect x="0" y="100" width="1024" height="15" fill="#5F9EA0" opacity="0.4"/>
-  <rect x="0" y="140" width="1024" height="12" fill="#48D1CC" opacity="0.3"/>
-  <rect x="0" y="180" width="1024" height="20" fill="#40E0D0" opacity="0.5"/>
-  <rect x="0" y="220" width="1024" height="18" fill="#00CED1" opacity="0.4"/>
-  <rect x="0" y="260" width="1024" height="15" fill="#5F9EA0" opacity="0.3"/>
-  <rect x="0" y="300" width="1024" height="22" fill="#4682B4" opacity="0.6"/>
-  <rect x="0" y="340" width="1024" height="16" fill="#20B2AA" opacity="0.4"/>
-  <rect x="0" y="380" width="1024" height="20" fill="#008B8B" opacity="0.5"/>
-  <!-- Methane clouds -->
-  <ellipse cx="300" cy="150" rx="80" ry="30" fill="#87CEEB" opacity="0.5"/>
-  <ellipse cx="700" cy="280" rx="100" ry="40" fill="#4FD0E3" opacity="0.4"/>
-  <ellipse cx="150" cy="350" rx="60" ry="25" fill="#48D1CC" opacity="0.3"/>
-  <ellipse cx="850" cy="200" rx="70" ry="35" fill="#40E0D0" opacity="0.6"/>
-  <!-- Subtle atmospheric features -->
-  <path d="M0,200 Q300,190 600,200 Q800,210 1024,200" stroke="#5F9EA0" stroke-width="1" fill="none" opacity="0.3"/>
-  <path d="M0,320 Q400,310 800,320 Q900,325 1024,320" stroke="#20B2AA" stroke-width="1" fill="none" opacity="0.4"/>
+
+  <!-- Base Uranus atmosphere -->
+  <rect width="1024" height="512" fill="url(#uranusBase)"/>
+
+  <!-- Vertical atmospheric bands (unique to Uranus due to sideways rotation) -->
+  <rect x="120" y="0" width="60" height="512" fill="url(#verticalBand1)" opacity="0.6"/>
+  <rect x="220" y="0" width="80" height="512" fill="url(#verticalBand2)" opacity="0.5"/>
+  <rect x="340" y="0" width="70" height="512" fill="url(#verticalBand1)" opacity="0.7"/>
+  <rect x="450" y="0" width="90" height="512" fill="url(#verticalBand2)" opacity="0.4"/>
+  <rect x="580" y="0" width="75" height="512" fill="url(#verticalBand1)" opacity="0.6"/>
+  <rect x="690" y="0" width="65" height="512" fill="url(#verticalBand2)" opacity="0.5"/>
+  <rect x="790" y="0" width="85" height="512" fill="url(#verticalBand1)" opacity="0.7"/>
+
+  <!-- Methane cloud formations -->
+  <ellipse cx="200" cy="150" rx="50" ry="25" fill="#B0E0E6" opacity="0.6"/>
+  <ellipse cx="600" cy="300" rx="65" ry="32" fill="#87CEEB" opacity="0.7"/>
+  <ellipse cx="800" cy="180" rx="40" ry="20" fill="#4FD0E3" opacity="0.5"/>
+  <ellipse cx="300" cy="380" rx="55" ry="28" fill="#B0E0E6" opacity="0.8"/>
+  <ellipse cx="450" cy="120" rx="45" ry="22" fill="#87CEEB" opacity="0.6"/>
+
+  <!-- Polar ice regions -->
+  <ellipse cx="512" cy="80" rx="300" ry="30" fill="#F0FFFF" opacity="0.4"/>
+  <ellipse cx="512" cy="432" rx="300" ry="30" fill="#F0FFFF" opacity="0.3"/>
+
+  <!-- Atmospheric circulation patterns -->
+  <ellipse cx="450" cy="200" rx="30" ry="15" fill="#87CEEB" opacity="0.4"/>
+  <ellipse cx="550" cy="350" rx="25" ry="12" fill="#B0E0E6" opacity="0.5"/>
+  <ellipse cx="700" cy="120" rx="35" ry="18" fill="#4FD0E3" opacity="0.6"/>
+  <ellipse cx="150" cy="280" rx="28" ry="14" fill="#87CEEB" opacity="0.5"/>
+  <ellipse cx="850" cy="400" rx="32" ry="16" fill="#B0E0E6" opacity="0.4"/>
+
+  <!-- Temperature variations -->
+  <circle cx="400" cy="250" r="15" fill="#2E8B57" opacity="0.3"/>
+  <circle cx="600" cy="280" r="18" fill="#006B96" opacity="0.4"/>
+  <circle cx="500" cy="180" r="12" fill="#4FD0E3" opacity="0.5"/>
+  <circle cx="250" cy="350" r="16" fill="#2E8B57" opacity="0.4"/>
+  <circle cx="750" cy="150" r="10" fill="#006B96" opacity="0.5"/>
 </svg>

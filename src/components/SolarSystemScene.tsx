@@ -6,6 +6,7 @@ import { OrbitControls, Stars, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import CelestialBody from './CelestialBody';
 import PlanetTooltip from './RoboticTooltip';
+import OrbitSpeedSettings from './OrbitSpeedSettings';
 import { PLANET_DATA, PlanetData } from '@/data/planetData';
 
 interface PlanetPosition {
@@ -70,9 +71,11 @@ const SceneContent = ({
   onPlanetSelect,
   selectedPlanet,
   language = 'id',
-  onPlanetPositionUpdate
+  onPlanetPositionUpdate,
+  orbitSpeedMultiplier = 1
 }: SolarSystemSceneProps & {
-  onPlanetPositionUpdate: (planetData: PlanetData, position: { x: number; y: number }) => void
+  onPlanetPositionUpdate: (planetData: PlanetData, position: { x: number; y: number }) => void;
+  orbitSpeedMultiplier?: number;
 }) => {
   const handlePlanetClick = useCallback((planet: PlanetData) => {
     if (onPlanetSelect) {
@@ -112,6 +115,7 @@ const SceneContent = ({
             isSelected={selectedPlanet?.name === planetData.name}
             onPositionUpdate={onPlanetPositionUpdate}
             language={language}
+            orbitSpeedMultiplier={orbitSpeedMultiplier}
           />
         </Suspense>
       ))}
@@ -142,6 +146,9 @@ const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
 }) => {
   const [planetPositions, setPlanetPositions] = useState<PlanetPosition[]>([]);
 
+  // State for orbit speed control
+  const [orbitSpeedMultiplier, setOrbitSpeedMultiplier] = useState<number>(1);
+
   const handlePlanetPositionUpdate = useCallback((planetData: PlanetData, position: { x: number; y: number }) => {
     setPlanetPositions(prev => {
       const existingIndex = prev.findIndex(p => p.planetData.name === planetData.name);
@@ -155,6 +162,11 @@ const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
         return [...prev, newPosition];
       }
     });
+  }, []);
+
+  // Handle orbit speed change
+  const handleOrbitSpeedChange = useCallback((multiplier: number) => {
+    setOrbitSpeedMultiplier(multiplier);
   }, []);
 
   return (
@@ -188,6 +200,7 @@ const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
           selectedPlanet={selectedPlanet}
           language={language}
           onPlanetPositionUpdate={handlePlanetPositionUpdate}
+          orbitSpeedMultiplier={orbitSpeedMultiplier}
         />
       </Canvas>
 
@@ -201,6 +214,13 @@ const SolarSystemScene: React.FC<SolarSystemSceneProps> = ({
           useIndonesian={language === 'id'}
         />
       ))}
+
+      {/* Floating Orbit Speed Settings Menu */}
+      <OrbitSpeedSettings
+        orbitSpeedMultiplier={orbitSpeedMultiplier}
+        onSpeedChange={handleOrbitSpeedChange}
+        language={language}
+      />
     </div>
   );
 };

@@ -13,6 +13,7 @@ interface CelestialBodyProps {
   isSelected?: boolean;
   onPositionUpdate?: (planetData: PlanetData, position: { x: number; y: number }) => void;
   language?: 'id' | 'en';
+  orbitSpeedMultiplier?: number;
 }
 
 const CelestialBody = React.memo(({
@@ -20,7 +21,8 @@ const CelestialBody = React.memo(({
   onClick,
   isSelected,
   onPositionUpdate,
-  language = 'id'
+  language = 'id',
+  orbitSpeedMultiplier = 1
 }: CelestialBodyProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
@@ -71,7 +73,7 @@ const CelestialBody = React.memo(({
 
     // Revolve around the sun (orbital motion)
     if (groupRef.current && planetData.distance > 0) {
-      const angle = elapsedTime * planetData.orbitSpeed * 0.2;
+      const angle = elapsedTime * planetData.orbitSpeed * 0.2 * orbitSpeedMultiplier;
       groupRef.current.position.x = Math.sin(angle) * planetData.distance;
       groupRef.current.position.z = Math.cos(angle) * planetData.distance;
     }

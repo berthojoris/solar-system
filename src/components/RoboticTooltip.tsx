@@ -45,49 +45,6 @@ const PlanetTooltip: React.FC<PlanetTooltipProps> = ({
         duration: 0.3
       }}
     >
-      {/* Pointer Line */}
-      <svg
-        className="absolute"
-        style={{
-          left: -1,
-          top: 60,
-          width: 4,
-          height: Math.max(lineHeight, 20),
-        }}
-      >
-        <motion.line
-          x1="2"
-          y1="0"
-          x2="2"
-          y2={Math.max(lineHeight, 20)}
-          stroke="url(#lineGradient)"
-          strokeWidth="2"
-          strokeDasharray="4,4"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{
-            pathLength: 1,
-            opacity: 1,
-            strokeDashoffset: [0, -8]
-          }}
-          transition={{
-            pathLength: { duration: 0.8, ease: "easeInOut" },
-            opacity: { duration: 0.3 },
-            strokeDashoffset: {
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "linear"
-            }
-          }}
-        />
-        <defs>
-          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.9" />
-            <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.9" />
-          </linearGradient>
-        </defs>
-      </svg>
-
       {/* Main tooltip container */}
       <div className="relative transform -translate-x-1/2">
         {/* Robotic border animation */}
@@ -151,19 +108,20 @@ const PlanetTooltip: React.FC<PlanetTooltipProps> = ({
           </motion.div>
         </div>
 
-        {/* Connection dot at bottom */}
+        {/* Speech bubble arrow pointer at bottom */}
         <div className="absolute top-full left-1/2 transform -translate-x-1/2">
           <motion.div
-            className="w-2 h-2 bg-cyan-400 rounded-full"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.7, 1, 0.7]
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+            className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-cyan-400/25"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.3 }}
+          />
+          {/* Inner arrow for layered effect */}
+          <motion.div
+            className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-t-6 border-l-transparent border-r-transparent border-t-slate-900/90"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.3 }}
           />
         </div>
       </div>
