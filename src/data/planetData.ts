@@ -9,6 +9,10 @@ export interface PlanetData {
   distance: number;
   color?: string; // fallback color if texture fails
   type: 'sun' | 'planet';
+  // Bahasa Indonesia translations
+  nameId: string;
+  descriptionId: string;
+  factsId: string[];
 }
 
 export const PLANET_DATA: PlanetData[] = [
@@ -27,7 +31,15 @@ export const PLANET_DATA: PlanetData[] = [
     rotationSpeed: 0.5,
     distance: 0,
     color: "#FDB813",
-    type: 'sun'
+    type: 'sun',
+    nameId: "Matahari",
+    descriptionId: "Bintang terang yang menjadi pusat tata surya kita!",
+    factsId: [
+      "Matahari adalah bintang kerdil kuning",
+      "Matahari mengandung 99,86 persen dari massa tata surya",
+      "Suhu permukaan sekitar 5.778 Kelvin atau 5.505 derajat Celsius",
+      "Matahari berusia sekitar 4,6 miliar tahun"
+    ]
   },
   {
     name: "Mercury",
@@ -44,7 +56,15 @@ export const PLANET_DATA: PlanetData[] = [
     rotationSpeed: 0.8,
     distance: 8,
     color: "#8C7853",
-    type: 'planet'
+    type: 'planet',
+    nameId: "Merkurius",
+    descriptionId: "Planet terkecil dan tercepat di tata surya kita!",
+    factsId: [
+      "Planet terdekat dengan Matahari",
+      "Tidak memiliki atmosfer atau bulan",
+      "Satu hari di Merkurius sama dengan 176 hari di Bumi",
+      "Suhu permukaan berkisar dari minus 255 hingga 427 derajat Celsius"
+    ]
   },
   {
     name: "Venus",
@@ -61,7 +81,15 @@ export const PLANET_DATA: PlanetData[] = [
     rotationSpeed: 0.6,
     distance: 12,
     color: "#FFC649",
-    type: 'planet'
+    type: 'planet',
+    nameId: "Venus",
+    descriptionId: "Planet terpanas dengan awan tebal yang beracun!",
+    factsId: [
+      "Planet kedua dari Matahari",
+      "Planet terpanas di tata surya",
+      "Berputar mundur dibandingkan planet lain",
+      "Satu hari di Venus lebih panjang dari satu tahunnya"
+    ]
   },
   {
     name: "Earth",
@@ -78,7 +106,15 @@ export const PLANET_DATA: PlanetData[] = [
     rotationSpeed: 1.0,
     distance: 16,
     color: "#6B93D6",
-    type: 'planet'
+    type: 'planet',
+    nameId: "Bumi",
+    descriptionId: "Planet rumah kita yang indah dan penuh kehidupan!",
+    factsId: [
+      "Planet ketiga dari Matahari",
+      "Satu-satunya planet yang diketahui memiliki kehidupan",
+      "Memiliki satu satelit alami yaitu Bulan",
+      "71 persen permukaan Bumi tertutup air"
+    ]
   },
   {
     name: "Mars",
@@ -95,7 +131,15 @@ export const PLANET_DATA: PlanetData[] = [
     rotationSpeed: 0.9,
     distance: 20,
     color: "#CD5C5C",
-    type: 'planet'
+    type: 'planet',
+    nameId: "Mars",
+    descriptionId: "Planet merah dengan gunung berapi terbesar di tata surya!",
+    factsId: [
+      "Planet keempat dari Matahari",
+      "Dikenal sebagai Planet Merah",
+      "Memiliki dua bulan kecil: Fobos dan Deimos",
+      "Rumah bagi gunung berapi terbesar: Olimpus Mons"
+    ]
   },
   {
     name: "Jupiter",
@@ -112,7 +156,15 @@ export const PLANET_DATA: PlanetData[] = [
     rotationSpeed: 1.5,
     distance: 28,
     color: "#D8CA9D",
-    type: 'planet'
+    type: 'planet',
+    nameId: "Yupiter",
+    descriptionId: "Planet terbesar dengan Bintik Merah Besar yang terkenal!",
+    factsId: [
+      "Planet kelima dari Matahari",
+      "Planet terbesar di tata surya",
+      "Memiliki 95 bulan termasuk empat terbesar: Io, Europa, Ganimede, dan Kalisto",
+      "Bintik Merah Besar adalah badai raksasa yang lebih besar dari Bumi"
+    ]
   },
   {
     name: "Saturn",
@@ -129,7 +181,15 @@ export const PLANET_DATA: PlanetData[] = [
     rotationSpeed: 1.3,
     distance: 36,
     color: "#FAD5A5",
-    type: 'planet'
+    type: 'planet',
+    nameId: "Saturnus",
+    descriptionId: "Planet bercincin dengan cincin es yang spektakuler!",
+    factsId: [
+      "Planet keenam dari Matahari",
+      "Terkenal karena sistem cincinnya yang menonjol",
+      "Memiliki 146 bulan termasuk Titan",
+      "Kepadatannya lebih rendah dari air, sehingga bisa mengapung!"
+    ]
   },
   {
     name: "Uranus",
@@ -146,7 +206,15 @@ export const PLANET_DATA: PlanetData[] = [
     rotationSpeed: 1.1,
     distance: 44,
     color: "#4FD0E3",
-    type: 'planet'
+    type: 'planet',
+    nameId: "Uranus",
+    descriptionId: "Raksasa es miring yang berputar menyamping!",
+    factsId: [
+      "Planet ketujuh dari Matahari",
+      "Berputar menyamping dengan kemiringan 98 derajat",
+      "Memiliki cincin samar dan 27 bulan",
+      "Atmosfer planet terdingin di tata surya"
+    ]
   },
   {
     name: "Neptune",
@@ -163,6 +231,14 @@ export const PLANET_DATA: PlanetData[] = [
     rotationSpeed: 1.2,
     distance: 52,
     color: "#4B70DD",
-    type: 'planet'
+    type: 'planet',
+    nameId: "Neptunus",
+    descriptionId: "Planet paling berangin dengan angin supersonik!",
+    factsId: [
+      "Planet kedelapan dan terluar dari Matahari",
+      "Planet paling berangin dengan kecepatan hingga 2.100 kilometer per jam",
+      "Memiliki 16 bulan termasuk Triton",
+      "Membutuhkan 165 tahun Bumi untuk mengelilingi Matahari"
+    ]
   }
 ];
