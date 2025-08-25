@@ -1,56 +1,106 @@
 <svg width="1024" height="512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Simplified Saturn base gradient -->
-    <linearGradient id="saturnBase" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFF8DC"/>
-      <stop offset="25%" style="stop-color:#FAD5A5"/>
-      <stop offset="50%" style="stop-color:#F0E68C"/>
-      <stop offset="75%" style="stop-color:#DAA520"/>
-      <stop offset="100%" style="stop-color:#B8860B"/>
+    <!-- Saturn's distinctive pale golden gradient -->
+    <radialGradient id="saturnBase" cx="40%" cy="30%" r="80%">
+      <stop offset="0%" style="stop-color:#FFFEF7;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#FFF8DC;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FAD5A5;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#DEB887;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#CD853F;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Saturn's pale cream bands -->
+    <linearGradient id="saturnLightBand" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFFEF7;stop-opacity:0.9" />
+      <stop offset="25%" style="stop-color:#FFF8DC;stop-opacity:1.0" />
+      <stop offset="50%" style="stop-color:#FFFFF0;stop-opacity:1.0" />
+      <stop offset="75%" style="stop-color:#FFF8DC;stop-opacity:1.0" />
+      <stop offset="100%" style="stop-color:#FFFEF7;stop-opacity:0.9" />
     </linearGradient>
 
-    <!-- Light band -->
-    <linearGradient id="lightBand" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#FFFACD"/>
-      <stop offset="50%" style="stop-color:#FFF8DC"/>
-      <stop offset="100%" style="stop-color:#FFFACD"/>
+    <!-- Saturn's subtle dark bands -->
+    <linearGradient id="saturnDarkBand" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F5DEB3;stop-opacity:0.7" />
+      <stop offset="25%" style="stop-color:#DEB887;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#D2B48C;stop-opacity:0.9" />
+      <stop offset="75%" style="stop-color:#DEB887;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#F5DEB3;stop-opacity:0.7" />
     </linearGradient>
 
-    <!-- Dark band -->
-    <linearGradient id="darkBand" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#DAA520"/>
-      <stop offset="50%" style="stop-color:#B8860B"/>
-      <stop offset="100%" style="stop-color:#DAA520"/>
-    </linearGradient>
+    <!-- Saturn's distinctive hexagonal storm at north pole -->
+    <radialGradient id="saturnHexStorm" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#FFE5CC;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#F0E68C;stop-opacity:0.8" />
+      <stop offset="80%" style="stop-color:#DEB887;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#CD853F;stop-opacity:0.3" />
+    </radialGradient>
+
+    <!-- Saturn atmospheric pattern -->
+    <pattern id="saturnPattern" x="0" y="0" width="120" height="40" patternUnits="userSpaceOnUse">
+      <rect width="120" height="40" fill="none"/>
+      <path d="M0,15 Q30,12 60,15 Q90,18 120,15" stroke="#F5DEB3" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <path d="M0,25 Q40,22 80,25 Q100,27 120,25" stroke="#DEB887" stroke-width="0.6" fill="none" opacity="0.4"/>
+    </pattern>
   </defs>
 
-  <!-- Base Saturn surface -->
-  <rect width="1024" height="512" fill="url(#saturnBase)"/>
+  <!-- Base Saturn atmosphere with distinctive pale color -->
+  <rect width="100%" height="100%" fill="url(#saturnBase)"/>
 
-  <!-- Horizontal bands -->
-  <rect x="0" y="60" width="1024" height="35" fill="url(#lightBand)" opacity="0.8"/>
-  <rect x="0" y="95" width="1024" height="30" fill="url(#darkBand)" opacity="0.7"/>
-  <rect x="0" y="125" width="1024" height="40" fill="url(#lightBand)" opacity="0.9"/>
-  <rect x="0" y="165" width="1024" height="25" fill="url(#darkBand)" opacity="0.8"/>
-  <rect x="0" y="190" width="1024" height="35" fill="url(#lightBand)" opacity="0.9"/>
-  <rect x="0" y="225" width="1024" height="30" fill="url(#darkBand)" opacity="0.7"/>
-  <rect x="0" y="255" width="1024" height="40" fill="url(#lightBand)" opacity="0.8"/>
-  <rect x="0" y="295" width="1024" height="25" fill="url(#darkBand)" opacity="0.8"/>
-  <rect x="0" y="320" width="1024" height="35" fill="url(#lightBand)" opacity="0.9"/>
-  <rect x="0" y="355" width="1024" height="30" fill="url(#darkBand)" opacity="0.7"/>
-  <rect x="0" y="385" width="1024" height="35" fill="url(#lightBand)" opacity="0.8"/>
-  <rect x="0" y="420" width="1024" height="30" fill="url(#darkBand)" opacity="0.7"/>
+  <!-- Saturn's characteristic subtle banding (much less prominent than Jupiter) -->
+  <!-- Northern hemisphere bands -->
+  <rect x="0" y="40" width="1024" height="25" fill="url(#saturnLightBand)" opacity="0.6"/>
+  <rect x="0" y="65" width="1024" height="20" fill="url(#saturnDarkBand)" opacity="0.4"/>
+  <rect x="0" y="85" width="1024" height="30" fill="url(#saturnLightBand)" opacity="0.7"/>
+  <rect x="0" y="115" width="1024" height="18" fill="url(#saturnDarkBand)" opacity="0.5"/>
+  <rect x="0" y="133" width="1024" height="35" fill="url(#saturnLightBand)" opacity="0.6"/>
+  <rect x="0" y="168" width="1024" height="22" fill="url(#saturnDarkBand)" opacity="0.4"/>
+  <rect x="0" y="190" width="1024" height="30" fill="url(#saturnLightBand)" opacity="0.8"/>
 
-  <!-- Storm features -->
-  <ellipse cx="200" cy="180" rx="30" ry="15" fill="#FFFACD" opacity="0.7"/>
-  <ellipse cx="500" cy="280" rx="35" ry="18" fill="#F0E68C" opacity="0.8"/>
-  <ellipse cx="750" cy="200" rx="25" ry="12" fill="#FFFACD" opacity="0.6"/>
-  <ellipse cx="150" cy="320" rx="20" ry="10" fill="#FFF8DC" opacity="0.8"/>
-  <ellipse cx="850" cy="350" rx="30" ry="15" fill="#F0E68C" opacity="0.7"/>
+  <!-- Equatorial region -->
+  <rect x="0" y="220" width="1024" height="45" fill="url(#saturnLightBand)" opacity="0.9"/>
+  <rect x="0" y="265" width="1024" height="25" fill="url(#saturnDarkBand)" opacity="0.3"/>
 
-  <!-- Atmospheric variations -->
-  <ellipse cx="350" cy="150" rx="15" ry="8" fill="#FFF8DC" opacity="0.8"/>
-  <ellipse cx="650" cy="250" rx="18" ry="9" fill="#FFFACD" opacity="0.7"/>
-  <ellipse cx="400" cy="350" rx="12" ry="6" fill="#F0E68C" opacity="0.9"/>
-  <ellipse cx="800" cy="180" rx="16" ry="8" fill="#FFF8DC" opacity="0.6"/>
+  <!-- Southern hemisphere bands -->
+  <rect x="0" y="290" width="1024" height="30" fill="url(#saturnLightBand)" opacity="0.8"/>
+  <rect x="0" y="320" width="1024" height="22" fill="url(#saturnDarkBand)" opacity="0.4"/>
+  <rect x="0" y="342" width="1024" height="35" fill="url(#saturnLightBand)" opacity="0.6"/>
+  <rect x="0" y="377" width="1024" height="18" fill="url(#saturnDarkBand)" opacity="0.5"/>
+  <rect x="0" y="395" width="1024" height="30" fill="url(#saturnLightBand)" opacity="0.7"/>
+  <rect x="0" y="425" width="1024" height="20" fill="url(#saturnDarkBand)" opacity="0.4"/>
+  <rect x="0" y="445" width="1024" height="25" fill="url(#saturnLightBand)" opacity="0.6"/>
+
+  <!-- Saturn's distinctive hexagonal storm at north pole -->
+  <polygon points="512,30 527,40 527,55 512,65 497,55 497,40" fill="url(#saturnHexStorm)" opacity="0.8"/>
+  <polygon points="512,35 522,42 522,52 512,59 502,52 502,42" fill="#FFE5CC" opacity="0.9"/>
+
+  <!-- Saturn's subtle storm systems (much calmer than Jupiter) -->
+  <ellipse cx="250" cy="150" rx="35" ry="20" fill="#FFFEF7" opacity="0.6"/>
+  <ellipse cx="600" cy="200" rx="28" ry="16" fill="#FFF8DC" opacity="0.7"/>
+  <ellipse cx="400" cy="300" rx="32" ry="18" fill="#FFFFF0" opacity="0.5"/>
+  <ellipse cx="750" cy="350" rx="25" ry="14" fill="#FFFEF7" opacity="0.6"/>
+  <ellipse cx="150" cy="400" rx="20" ry="12" fill="#FFF8DC" opacity="0.8"/>
+
+  <!-- Smaller atmospheric features -->
+  <ellipse cx="350" cy="120" rx="18" ry="10" fill="#FFFFF0" opacity="0.7"/>
+  <ellipse cx="650" cy="180" rx="15" ry="8" fill="#FFFEF7" opacity="0.6"/>
+  <ellipse cx="500" cy="380" rx="22" ry="12" fill="#FFF8DC" opacity="0.8"/>
+  <ellipse cx="800" cy="280" rx="16" ry="9" fill="#FFFFF0" opacity="0.5"/>
+
+  <!-- Subtle wave patterns in the atmosphere -->
+  <path d="M0,140 Q200,135 400,140 Q600,145 800,140 Q900,138 1024,140"
+        stroke="#F5DEB3" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M0,280 Q300,275 600,280 Q800,285 1024,280"
+        stroke="#DEB887" stroke-width="3" fill="none" opacity="0.3"/>
+  <path d="M0,360 Q150,355 300,360 Q450,365 600,360 Q750,355 900,360 Q950,358 1024,360"
+        stroke="#F5DEB3" stroke-width="2" fill="none" opacity="0.5"/>
+
+  <!-- Atmospheric texture overlay -->
+  <rect width="100%" height="100%" fill="url(#saturnPattern)" opacity="0.2"/>
+
+  <!-- Ring shadow effect on planet surface (subtle) -->
+  <ellipse cx="512" cy="256" rx="400" ry="30" fill="#CD853F" opacity="0.1"/>
+  <ellipse cx="512" cy="256" rx="350" ry="25" fill="#D2B48C" opacity="0.1"/>
+
+  <!-- Equatorial jet stream (much subtler than Jupiter) -->
+  <path d="M0,256 Q400,251 800,256 Q900,258 1024,256" stroke="#FFFEF7" stroke-width="1.5" fill="none" opacity="0.3"/>
 </svg>
